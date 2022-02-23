@@ -1,4 +1,4 @@
-# a99 Final Project
+# Personal Health Information Management App (name pending)
 
 ## UPDATE
 
@@ -6,11 +6,7 @@ You don't need to accept this assignment since you are already assigned to teams
 
 ## Summary 
 
-COMP426 final project template repository.
-All your code and documentation goes here.
-Change this text to be a brief description of your final project.
-Put the name of your project in the header above.
-You will change everything below to be the main technical documentation, as outlined below.
+Planning and development for an application centered around tracking personal health information while performing useful calculations and curating summaries of the user's nutrition, activity level, and sleep patterns.
 
 ## First steps
 
@@ -47,8 +43,12 @@ Some basic roles you will want to consider:
     4. Design lead
     5. Etc.
 
-You will notice that there are more roles than people in your group.
-That is because you will all be doing a hybrid job of managing a thing while working on other things.
+## Proposed Roles
+Front end / Design leads: Savannah and Autumn
+Back end lead: Joe
+Database lead: Jack
+
+Plan/Documentation Manager: Savannah
 
 ## Check in with instructional staff
 
