@@ -1,0 +1,25 @@
+## 2/22/22 Meeting Summary
+**Project choice**: Personal health information management app
+
+## Usage/Functionality Goals
+  •Store basic health information based on a user profile including but not limited to:
+    -Age
+    -Sex
+    -Height
+    -Weight
+    -Race / Ethnicity
+  •Store nutritional intake data for calories, total fat, cholesterol, sodium, total carbohydrates, dietary fiber, sugar, added sugars, protein, vitamin D, calcium, iron, potassium, vitamin A and vitamin C
+  •Provide daily summaries for total nutritional intake based on individual intake data
+  •Store activity such as calculated daily steps and exercises (as well as a “rating scale” for intensity of exercise and duration)
+  •Provide daily summaries for estimated calories burned through physical activity to be factored into daily nutritional summary
+  •Store sleep data, namely the beginning and end of a sleep “session”
+
+## License
+GNU General Public License or Hippocratic License
+
+## Tentative Areas of Interest
+Front-end / Design Leads: Savannah, Autumn
+Back-end Lead: Joe
+Database Lead: Jack
+
+*The project has been created on our team page NOT the repo but is linked to the repo for the few automated updates I turned on.
