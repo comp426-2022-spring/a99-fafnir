@@ -1,0 +1,28 @@
+Summary
+•Narrowed down to sleep tracking (wake up time vs sleep time) and first / last meal time
+•Include information on importance of sleep / relative meal times
+•User-given sleep goals
+•Calculate sleep score (changing colors based on sleep score)
+
+Table columns
+•Name
+•Username
+•Password
+•Email address
+•Age
+•Wake up time
+•Bedtime
+•First meal time
+•Last meal time
+
+Name Brainstorming
+•Rest n Digest
+•Clock Eats
+
+To Do
+•Research info on sleep / meal time + start add sleep page frontend (Savannah)
+	-Change project tab
+	-Push current endpoint code for review
+•User database frameworking (Joe)
+•Logging history / access logs + sleep score (Jake)
+•Start homepage frontend (Autumn)
