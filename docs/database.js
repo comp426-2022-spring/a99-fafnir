@@ -17,8 +17,8 @@ if (row == undefined) {
         password TEXT,
         name TEXT,
         age NUMBER,
-        wake_up_time NUMBER,
-        bedtime NUMBER,
+        wake_up_goal NUMBER,
+        bedtime_goal NUMBER,
     );
     `;
     user_db.exec(sqlInit);
@@ -38,8 +38,10 @@ if (row == undefined) {
         CREATE TABLE userlog(
         id NUMBER,
         date NUMBER,
-        first_meal_time,
-        last_meal_time,
+        first_meal_time NUMBER,
+        last_meal_time NUMBER,
+        wake_up_time NUMBER,
+        bedtime NUMBER,
     );
     `;
     log_db.exec(sqlInit);

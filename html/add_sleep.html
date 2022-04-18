@@ -8,6 +8,7 @@
     <body>
         <h1>Add Sleep Session</h1>
         <!-- <form action="/add_sleep.php"> -->
+        <form>
         <h2>Enter the start time for session:</h2>
         <input list="start_hours" name="start_hour" id="start_hour">  <!--value should be begin goal time-->
         <datalist id="start_hours">
@@ -46,17 +47,157 @@
             <option value="pm">
         </datalist>
         <h2>Enter the end time for session:</h2>
-        <input list="end_times" name="end_time" id="end_time"> <!--value should be begin goal time + total sleep time goal-->
+        <input list="end_hours" name="end_hour" id="end_hour">  <!--value should be begin goal time-->
+        <datalist id="end_hours">
+            <option value="7">
+            <option value="8">
+            <option value="9">
+            <option value="10">
+            <option value="11">
+            <option value="12">
+            <option value="1">
+            <option value="2">
+            <option value="3">
+            <option value="4">
+            <option value="5">
+            <option value="6">
+        </datalist>
+        <nobr>:</nobr>
+        <input list="end_minutes" name="end_minute" id="end_minute">  <!--value should be begin goal time-->
+        <datalist id="end_minutes">
+            <option value="00">
+            <option value="05">
+            <option value="10">
+            <option value="15">
+            <option value="20">
+            <option value="25">
+            <option value="30">
+            <option value="35">
+            <option value="40">
+            <option value="45">
+            <option value="50">
+            <option value="55">
+        </datalist>
+        <input list="end_am_pms" name="end_am_pm" id="end_am_pm">  <!--value should be begin goal time-->
+        <datalist id="end_am_pms">
+            <option value="am">
+            <option value="pm">
+        </datalist>
+        <h2>Enter your last mealtime before this session:</h2>
+        <input list="meal_start_hs" name="meal_start_h" id="meal_start_h">  <!--value should be begin goal time-->
+        <datalist id="meal_start_hs">
+            <option value="7">
+            <option value="8">
+            <option value="9">
+            <option value="10">
+            <option value="11">
+            <option value="12">
+            <option value="1">
+            <option value="2">
+            <option value="3">
+            <option value="4">
+            <option value="5">
+            <option value="6">
+        </datalist>
+        <nobr>:</nobr>
+        <input list="meal_start_ms" name="meal_start_m" id="meal_start_m">  <!--value should be begin goal time-->
+        <datalist id="meal_start_ms">
+            <option value="00">
+            <option value="05">
+            <option value="10">
+            <option value="15">
+            <option value="20">
+            <option value="25">
+            <option value="30">
+            <option value="35">
+            <option value="40">
+            <option value="45">
+            <option value="50">
+            <option value="55">
+        </datalist>
+        <input list="meal_start_ss" name="meal_start_s" id="meal_start_s">  <!--value should be begin goal time-->
+        <datalist id="meal_start_ss">
+            <option value="am">
+            <option value="pm">
+        </datalist>
+        <h2>Enter your first mealtime after this session:</h2>
+        <input list="meal_end_hs" name="meal_end_h" id="meal_end_h">  <!--value should be begin goal time-->
+        <datalist id="meal_end_hs">
+            <option value="7">
+            <option value="8">
+            <option value="9">
+            <option value="10">
+            <option value="11">
+            <option value="12">
+            <option value="1">
+            <option value="2">
+            <option value="3">
+            <option value="4">
+            <option value="5">
+            <option value="6">
+        </datalist>
+        <nobr>:</nobr>
+        <input list="meal_end_ms" name="meal_end_m" id="meal_end_m">  <!--value should be begin goal time-->
+        <datalist id="meal_end_ms">
+            <option value="00">
+            <option value="05">
+            <option value="10">
+            <option value="15">
+            <option value="20">
+            <option value="25">
+            <option value="30">
+            <option value="35">
+            <option value="40">
+            <option value="45">
+            <option value="50">
+            <option value="55">
+        </datalist>
+        <input list="meal_end_ss" name="meal_end_s" id="meal_end_s">  <!--value should be begin goal time-->
+        <datalist id="meal_end_ss">
+            <option value="am">
+            <option value="pm">
+        </datalist>
         <!-- <input type="submit"> -->
-        <button onclick="store_time()">Submit</button>
-        <!-- </form> -->
+        <input type="button" value="Submit" id="submit" onClick="store_time()">
+        </form>
         
 
-        <script src="../add_sleep.js">
-            function store_time() {
+        <script>
+            function store_time(){
                 var start_hour = document.getElementById("start_hour").value;
                 var start_minute = document.getElementById("start_minute").value;
                 var start_am_pm = document.getElementById("start_am_pm").value;
+                var end_hour = document.getElementById("end_hour").value;
+                var end_minute = document.getElementById("end_minute").value;
+                var end_am_pm = document.getElementById("end_am_pm").value;
+                var meal_start_h = document.getElementById("meal_start_h").value;
+                var meal_start_m = document.getElementById("meal_start_m").value;
+                var meal_start_s = document.getElementById("meal_start_s").value;
+                var meal_end_h = document.getElementById("meal_end_h").value;
+                var meal_end_m = document.getElementById("meal_end_m").value;
+                var meal_end_s = document.getElementById("meal_end_s").value;
+
+                var start_time = (start_hour*100) + start_minute;
+                if (start_am_pm == "pm") {
+                    start_time += 1200;
+                }
+
+                var end_time = (end_hour*100) + end_minute;
+                if (end_am_pm == "pm") {
+                    end_time += 1200;
+                }
+
+                var meal_start_time = (meal_start_h*100) + meal_start_m;
+                if (meal_start_s == "pm") {
+                    meal_start_time += 1200;
+                }
+
+                var meal_end_time = (meal_end_h*100) + meal_end_m;
+                if (meal_end_s == "pm") {
+                    meal_end_time += 1200;
+                }
+
+                module.exports = store_time();
             }
         </script>
     </body>
