@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Add Sleep</title>
-        <link rel="stylesheet" href="./add_sleep.css">
+        <!-- <link rel="stylesheet" href="/add_sleep.css"> -->
     </head>
     <body>
         <h1>Add Sleep Session</h1>
@@ -163,7 +163,13 @@
         
 
         <script>
-            function store_time(){
+            // const db = require('./database.js')
+            var start = 0;
+            var end = 0;
+            var mstart = 0;
+            var mend = 0;
+
+            async function store_time(){
                 var start_hour = document.getElementById("start_hour").value;
                 var start_minute = document.getElementById("start_minute").value;
                 var start_am_pm = document.getElementById("start_am_pm").value;
@@ -177,28 +183,79 @@
                 var meal_end_m = document.getElementById("meal_end_m").value;
                 var meal_end_s = document.getElementById("meal_end_s").value;
 
+                var start_hour = parseInt(start_hour, 10)
+                var start_minute = parseInt(start_minute, 10)
                 var start_time = (start_hour*100) + start_minute;
                 if (start_am_pm == "pm") {
                     start_time += 1200;
                 }
 
+                var end_hour = parseInt(end_hour, 10)
+                var end_minute = parseInt(end_minute, 10)
                 var end_time = (end_hour*100) + end_minute;
                 if (end_am_pm == "pm") {
                     end_time += 1200;
                 }
 
+                var meal_start_h = parseInt(meal_start_h, 10)
+                var meal_start_m = parseInt(meal_start_m, 10)
                 var meal_start_time = (meal_start_h*100) + meal_start_m;
                 if (meal_start_s == "pm") {
                     meal_start_time += 1200;
                 }
 
+                var meal_end_h = parseInt(meal_end_h, 10)
+                var meal_end_m = parseInt(meal_end_m, 10)
                 var meal_end_time = (meal_end_h*100) + meal_end_m;
                 if (meal_end_s == "pm") {
                     meal_end_time += 1200;
                 }
 
-                module.exports = store_time();
+                var start = start_time;
+                var end = end_time;
+                var mstart = meal_start_time;
+                var mend = meal_end_time;
+
+                let logData = {
+                    id: "",
+                    date: Date.now(),
+                    first_meal_time: mstart,
+                    last_meal_time: mend,
+                    wake_up_time: start,
+                    bedtime: end,
+                }
+
+                const logDataJson = JSON.stringify(logData)
+                console.log(logDataJson)
+
+                const options = {
+                      method: "POST",
+                      headers: {
+                       "Content-Type": "application/json",
+                        Accept: "application/json"
+                      },
+                      body: logDataJson
+                    };
+
+                const url = "http://localhost:5000/sleep/"
+                try {
+                    const data = await sendData({url, options})
+                    console.log(data)
+                } catch (error) {
+                    console.log(error)
+                }
             }
+
+            async function sendData({url, options}) {
+                const response = await fetch(url, options)
+                console.log(response)
+                return response.json()
+            }
+                
+                // const stmt = db.prepare('INSERT INTO userlog (id, date, first_meal_time, last_meal_time, wake_up_time, bedtime) VALUES (?, ?, ?, ?, ?, ?)')
+                // const info = stmt.run(logData.remoteaddr, logData.remoteuser, logData.time, logData.method, logData.url, logData.protocol, logData.httpversion, logData.status, logData.referer, logData.useragent)
+            
         </script>
+
     </body>
 </html>
