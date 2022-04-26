@@ -3,9 +3,67 @@
     <head>
         <meta charset="UTF-8">
         <title>Add Sleep</title>
-        <!-- <link rel="stylesheet" href="/add_sleep.css"> -->
+        <link rel="stylesheet" href="/add_sleep.css">
     </head>
     <body>
+
+        <nav>
+            <button id="homenav" onclick="showHome()">Home</button>
+            <button id="add_sleepnav" onclick="showAdd()">Add Sleep</button>
+            <button id="profilenav" onclick="showProfile()">Profile</button>
+        </nav>
+
+        <script>
+            function showHome() {
+                showActual("home")
+            }
+
+            function showAdd() {
+                showActual("add")
+            }
+
+            function showProfile() {
+                showActual("profile")
+            }
+
+            function showActual(tab) {
+                var x = document.getElementById("home")
+                var y = document.getElementById("add_sleep")
+                var z = document.getElementById("profile")
+                if (tab === "home") {
+                    if (x.style.display === "none") {
+                        x.style.display = "block";
+                        y.style.display = "none";
+                        z.style.display = "none";
+                    } else {
+                        x.style.display = "none";
+                    }
+                } else if (tab === "add") {
+                    if (y.style.display === "none") {
+                        y.style.display = "block";
+                        x.style.display = "none";
+                        z.style.display = "none";
+                    } else {
+                        y.style.display = "none";
+                    }
+                } else if (tab === "profile") {
+                    if (z.style.display === "none") {
+                        z.style.display = "block";
+                        y.style.display = "none";
+                        x.style.display = "none";
+                    } else {
+                        z.style.display = "none";
+                    }
+                }
+            }
+
+        </script>
+
+        <div id="home">
+            <h1>Home</h1>
+        </div>
+
+        <div id="add_sleep" class="hidden">
         <h1>Add Sleep Session</h1>
         <!-- <form action="/add_sleep.php"> -->
         <form>
@@ -251,11 +309,12 @@
                 console.log(response)
                 return response.json()
             }
-                
-                // const stmt = db.prepare('INSERT INTO userlog (id, date, first_meal_time, last_meal_time, wake_up_time, bedtime) VALUES (?, ?, ?, ?, ?, ?)')
-                // const info = stmt.run(logData.remoteaddr, logData.remoteuser, logData.time, logData.method, logData.url, logData.protocol, logData.httpversion, logData.status, logData.referer, logData.useragent)
-            
         </script>
+        </div>
+
+        <div id="profile" class="hidden">
+            <h1>Profile</h1>
+        </div>
 
     </body>
 </html>
