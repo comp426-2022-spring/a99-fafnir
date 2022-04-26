@@ -1,4 +1,3 @@
-
 /** Calculates sleep score
  * 
  * Function takes in age, sleep time, wake up time, 
