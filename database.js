@@ -36,10 +36,12 @@ row = stmt.get();
 if (row == undefined) {
     const sqlInit = `
         CREATE TABLE userlog(
-        id NUMBER,
+        id INTEGER PRIMARY KEY,
         date NUMBER,
-        first_meal_time,
-        last_meal_time,
+        first_meal_time NUMBER,
+        last_meal_time NUMBER,
+        wake_up_time NUMBER,
+        bedtime NUMBER,
     );
     `;
     log_db.exec(sqlInit);

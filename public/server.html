@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Add Sleep</title>
+        <link rel="stylesheet" href="/add_sleep.css">
+    </head>
+    <body>
+
+        <br>
+        <nav>
+            <button id="homenav" onclick="showHome()" class="button-51" role="button">Home</button>
+            <button id="add_sleepnav" onclick="showAdd()" class="button-51" role="button">Add Sleep</button>
+            <button id="profilenav" onclick="showProfile()" class="button-51" role="button">Profile</button>
+        </nav>
+
+        <script>
+            function showHome() {
+                showActual("home")
+            }
+
+            function showAdd() {
+                showActual("add")
+            }
+
+            function showProfile() {
+                showActual("profile")
+            }
+
+            function showActual(tab) {
+                var x = document.getElementById("home")
+                var y = document.getElementById("add_sleep")
+                var z = document.getElementById("profile")
+                if (tab === "home") {
+                    if (x.style.display === "none") {
+                        x.style.display = "block";
+                        y.style.display = "none";
+                        z.style.display = "none";
+                    } else {
+                        x.style.display = "none";
+                    }
+                } else if (tab === "add") {
+                    if (y.style.display === "none") {
+                        y.style.display = "block";
+                        x.style.display = "none";
+                        z.style.display = "none";
+                    } else {
+                        y.style.display = "none";
+                    }
+                } else if (tab === "profile") {
+                    if (z.style.display === "none") {
+                        z.style.display = "block";
+                        y.style.display = "none";
+                        x.style.display = "none";
+                    } else {
+                        z.style.display = "none";
+                    }
+                }
+            }
+
+        </script>
+
+        <div id="home">
+            <h1>Home</h1>
+        </div>
+
+        <div id="add_sleep" class="hidden">
+        <h1>Add Sleep Session</h1>
+        <!-- <form action="/add_sleep.php"> -->
+        <form>
+        <h2>Enter the start time for session:</h2>
+        <input list="start_hours" name="start_hour" id="start_hour">  <!--value should be begin goal time-->
+        <datalist id="start_hours">
+            <option value="7">
+            <option value="8">
+            <option value="9">
+            <option value="10">
+            <option value="11">
+            <option value="12">
+            <option value="1">
+            <option value="2">
+            <option value="3">
+            <option value="4">
+            <option value="5">
+            <option value="6">
+        </datalist>
+        <nobr>:</nobr>
+        <input list="start_minutes" name="start_minute" id="start_minute">  <!--value should be begin goal time-->
+        <datalist id="start_minutes">
+            <option value="00">
+            <option value="05">
+            <option value="10">
+            <option value="15">
+            <option value="20">
+            <option value="25">
+            <option value="30">
+            <option value="35">
+            <option value="40">
+            <option value="45">
+            <option value="50">
+            <option value="55">
+        </datalist>
+        <input list="start_am_pms" name="start_am_pm" id="start_am_pm">  <!--value should be begin goal time-->
+        <datalist id="start_am_pms">
+            <option value="am">
+            <option value="pm">
+        </datalist>
+        <h2>Enter the end time for session:</h2>
+        <input list="end_hours" name="end_hour" id="end_hour">  <!--value should be begin goal time-->
+        <datalist id="end_hours">
+            <option value="7">
+            <option value="8">
+            <option value="9">
+            <option value="10">
+            <option value="11">
+            <option value="12">
+            <option value="1">
+            <option value="2">
+            <option value="3">
+            <option value="4">
+            <option value="5">
+            <option value="6">
+        </datalist>
+        <nobr>:</nobr>
+        <input list="end_minutes" name="end_minute" id="end_minute">  <!--value should be begin goal time-->
+        <datalist id="end_minutes">
+            <option value="00">
+            <option value="05">
+            <option value="10">
+            <option value="15">
+            <option value="20">
+            <option value="25">
+            <option value="30">
+            <option value="35">
+            <option value="40">
+            <option value="45">
+            <option value="50">
+            <option value="55">
+        </datalist>
+        <input list="end_am_pms" name="end_am_pm" id="end_am_pm">  <!--value should be begin goal time-->
+        <datalist id="end_am_pms">
+            <option value="am">
+            <option value="pm">
+        </datalist>
+        <h2>Enter your last mealtime before this session:</h2>
+        <input list="meal_start_hs" name="meal_start_h" id="meal_start_h">  <!--value should be begin goal time-->
+        <datalist id="meal_start_hs">
+            <option value="7">
+            <option value="8">
+            <option value="9">
+            <option value="10">
+            <option value="11">
+            <option value="12">
+            <option value="1">
+            <option value="2">
+            <option value="3">
+            <option value="4">
+            <option value="5">
+            <option value="6">
+        </datalist>
+        <nobr>:</nobr>
+        <input list="meal_start_ms" name="meal_start_m" id="meal_start_m">  <!--value should be begin goal time-->
+        <datalist id="meal_start_ms">
+            <option value="00">
+            <option value="05">
+            <option value="10">
+            <option value="15">
+            <option value="20">
+            <option value="25">
+            <option value="30">
+            <option value="35">
+            <option value="40">
+            <option value="45">
+            <option value="50">
+            <option value="55">
+        </datalist>
+        <input list="meal_start_ss" name="meal_start_s" id="meal_start_s">  <!--value should be begin goal time-->
+        <datalist id="meal_start_ss">
+            <option value="am">
+            <option value="pm">
+        </datalist>
+        <h2>Enter your first mealtime after this session:</h2>
+        <input list="meal_end_hs" name="meal_end_h" id="meal_end_h">  <!--value should be begin goal time-->
+        <datalist id="meal_end_hs">
+            <option value="7">
+            <option value="8">
+            <option value="9">
+            <option value="10">
+            <option value="11">
+            <option value="12">
+            <option value="1">
+            <option value="2">
+            <option value="3">
+            <option value="4">
+            <option value="5">
+            <option value="6">
+        </datalist>
+        <nobr>:</nobr>
+        <input list="meal_end_ms" name="meal_end_m" id="meal_end_m">  <!--value should be begin goal time-->
+        <datalist id="meal_end_ms">
+            <option value="00">
+            <option value="05">
+            <option value="10">
+            <option value="15">
+            <option value="20">
+            <option value="25">
+            <option value="30">
+            <option value="35">
+            <option value="40">
+            <option value="45">
+            <option value="50">
+            <option value="55">
+        </datalist>
+        <input list="meal_end_ss" name="meal_end_s" id="meal_end_s">  <!--value should be begin goal time-->
+        <datalist id="meal_end_ss">
+            <option value="am">
+            <option value="pm">
+        </datalist>
+        <!-- <input type="submit"> -->
+        <input type="button" value="Submit" id="submit" onClick="store_time()">
+        </form>
+        
+
+        <script>
+            // const db = require('./database.js')
+            var start = 0;
+            var end = 0;
+            var mstart = 0;
+            var mend = 0;
+
+            async function store_time(){
+                var start_hour = document.getElementById("start_hour").value;
+                var start_minute = document.getElementById("start_minute").value;
+                var start_am_pm = document.getElementById("start_am_pm").value;
+                var end_hour = document.getElementById("end_hour").value;
+                var end_minute = document.getElementById("end_minute").value;
+                var end_am_pm = document.getElementById("end_am_pm").value;
+                var meal_start_h = document.getElementById("meal_start_h").value;
+                var meal_start_m = document.getElementById("meal_start_m").value;
+                var meal_start_s = document.getElementById("meal_start_s").value;
+                var meal_end_h = document.getElementById("meal_end_h").value;
+                var meal_end_m = document.getElementById("meal_end_m").value;
+                var meal_end_s = document.getElementById("meal_end_s").value;
+
+                var start_hour = parseInt(start_hour, 10)
+                var start_minute = parseInt(start_minute, 10)
+                var start_time = (start_hour*100) + start_minute;
+                if (start_am_pm == "pm") {
+                    start_time += 1200;
+                }
+
+                var end_hour = parseInt(end_hour, 10)
+                var end_minute = parseInt(end_minute, 10)
+                var end_time = (end_hour*100) + end_minute;
+                if (end_am_pm == "pm") {
+                    end_time += 1200;
+                }
+
+                var meal_start_h = parseInt(meal_start_h, 10)
+                var meal_start_m = parseInt(meal_start_m, 10)
+                var meal_start_time = (meal_start_h*100) + meal_start_m;
+                if (meal_start_s == "pm") {
+                    meal_start_time += 1200;
+                }
+
+                var meal_end_h = parseInt(meal_end_h, 10)
+                var meal_end_m = parseInt(meal_end_m, 10)
+                var meal_end_time = (meal_end_h*100) + meal_end_m;
+                if (meal_end_s == "pm") {
+                    meal_end_time += 1200;
+                }
+
+                var start = start_time;
+                var end = end_time;
+                var mstart = meal_start_time;
+                var mend = meal_end_time;
+
+                let logData = {
+                    id: "",
+                    date: Date.now(),
+                    first_meal_time: mstart,
+                    last_meal_time: mend,
+                    wake_up_time: start,
+                    bedtime: end,
+                }
+
+                const logDataJson = JSON.stringify(logData)
+                console.log(logDataJson)
+
+                const options = {
+                      method: "POST",
+                      headers: {
+                       "Content-Type": "application/json",
+                        Accept: "application/json"
+                      },
+                      body: logDataJson
+                    };
+
+                const url = "http://localhost:5000/sleep/"
+                try {
+                    const data = await sendData({url, options})
+                    console.log(data)
+                } catch (error) {
+                    console.log(error)
+                }
+
+                document.getElementById("start_hour").value = null;
+                document.getElementById("start_minute").value = null;
+                document.getElementById("start_am_pm").value = null;
+                document.getElementById("end_hour").value = null;
+                document.getElementById("end_minute").value = null;
+                document.getElementById("end_am_pm").value = null;
+                document.getElementById("meal_start_h").value = null;
+                document.getElementById("meal_start_m").value = null;
+                document.getElementById("meal_start_s").value = null;
+                document.getElementById("meal_end_h").value = null;
+                document.getElementById("meal_end_m").value = null;
+                document.getElementById("meal_end_s").value = null;
+
+            }
+
+            async function sendData({url, options}) {
+                const response = await fetch(url, options)
+                console.log(response)
+                return response.json()
+            }
+
+        </script>
+        </div>
+
+        <div id="profile" class="hidden">
+            <h1>Profile</h1>
+        </div>
+
+    </body>
+</html>
