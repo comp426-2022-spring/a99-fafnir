@@ -1,9 +1,6 @@
 var express = require("express")
-// var sleep = require("./add_sleep.js")
-const morgan = require('morgan')
-// const create_profile = require("./create_profile.js")
-// const view_profile = require("./view_profile.js")
-// const edit_profile = require("./edit_profile.js")
+const db = require('./database.js')
+const user_log = require('./user_log.js')
 const port = 5000
 
 const app = express()
@@ -14,12 +11,14 @@ app.use(express.urlencoded());
 // const path = require('path');
 app.use(express.static('./public'));
 
-app.post('/sleep', function (req, res) {
+app.post('/sleep', function (req, res, next) {
     //res.send('Add sleep page.');
     //res.sendFile(__dirname + './html/add_sleep.html');
     console.log(req.body)
-    const stmt = db.prepare('INSERT INTO accesslog (remoteaddr, remoteuser, time, method, url, protocol, httpversion, status, referer, useragent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
-    const info = stmt.run(logData.remoteaddr, logData.remoteuser, logData.time, logData.method, logData.url, logData.protocol, logData.httpversion, logData.status, logData.referer, logData.useragent)
+    const data = req.body;
+    // const stmt = user_log.prepare('INSERT INTO userlog (date, first_meal_time, last_meal_time, wake_up_time, bedtime) VALUES (?, ?, ?, ?, ?)');
+    // const info = stmt.run(data.date, data.first_meal_time, data.last_meal_time, data.wake_up_time, data.bedtime);
+    // next();
     res.status(200).json({"status":"working"})
 })
 // app.use('/create', create_profile);
