@@ -18,6 +18,8 @@ app.post('/sleep', function (req, res) {
     //res.send('Add sleep page.');
     //res.sendFile(__dirname + './html/add_sleep.html');
     console.log(req.body)
+    const stmt = db.prepare('INSERT INTO accesslog (remoteaddr, remoteuser, time, method, url, protocol, httpversion, status, referer, useragent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
+    const info = stmt.run(logData.remoteaddr, logData.remoteuser, logData.time, logData.method, logData.url, logData.protocol, logData.httpversion, logData.status, logData.referer, logData.useragent)
     res.status(200).json({"status":"working"})
 })
 // app.use('/create', create_profile);

@@ -1,9 +1,5 @@
 # Personal Health Information Management App (name pending)
 
-## UPDATE
-
-You don't need to accept this assignment since you are already assigned to teams. So, there is not assignment invite link for a99.
-
 ## Summary 
 
 Planning and development for an application centered around tracking personal health information while performing useful calculations and curating summaries of the user's nutrition, activity level, and sleep patterns.
