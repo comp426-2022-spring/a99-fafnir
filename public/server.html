@@ -7,10 +7,11 @@
     </head>
     <body>
 
+        <br>
         <nav>
-            <button id="homenav" onclick="showHome()">Home</button>
-            <button id="add_sleepnav" onclick="showAdd()">Add Sleep</button>
-            <button id="profilenav" onclick="showProfile()">Profile</button>
+            <button id="homenav" onclick="showHome()" class="button-51" role="button">Home</button>
+            <button id="add_sleepnav" onclick="showAdd()" class="button-51" role="button">Add Sleep</button>
+            <button id="profilenav" onclick="showProfile()" class="button-51" role="button">Profile</button>
         </nav>
 
         <script>
@@ -302,6 +303,20 @@
                 } catch (error) {
                     console.log(error)
                 }
+
+                document.getElementById("start_hour").value = null;
+                document.getElementById("start_minute").value = null;
+                document.getElementById("start_am_pm").value = null;
+                document.getElementById("end_hour").value = null;
+                document.getElementById("end_minute").value = null;
+                document.getElementById("end_am_pm").value = null;
+                document.getElementById("meal_start_h").value = null;
+                document.getElementById("meal_start_m").value = null;
+                document.getElementById("meal_start_s").value = null;
+                document.getElementById("meal_end_h").value = null;
+                document.getElementById("meal_end_m").value = null;
+                document.getElementById("meal_end_s").value = null;
+
             }
 
             async function sendData({url, options}) {
@@ -309,6 +324,7 @@
                 console.log(response)
                 return response.json()
             }
+
         </script>
         </div>
 
