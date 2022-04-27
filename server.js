@@ -1,4 +1,4 @@
-// Require Dependencies
+// Required external modules
 var express = require("express")
 const path = require("path");
 const expressSession = require("express-session");
@@ -7,22 +7,86 @@ const Auth0Strategy = require("passport-auth0");
 const cors = require('cors');
 var bodyParser = require('body-parser')
 require("dotenv").config();
+const { auth } = require('express-openid-connect'); //test
 
 // Require additional files
 const sleepScore = require("./sleepscore.js");
 const user_log = require('./user_log.js')
 const db = require('./database.js').user_db;
+const authRouter = require("./auth");
 
 // Set port
-const port = 5000
+const port = 8000
 
 // Initialize app
 const app = express()
 
-// Configure body-parser
+// Body-parser Configuration
 app.use(express.json());
 app.use(express.urlencoded());
-app.use(cors());
+//app.use(cors());
+app.use(cors({origin: '*'}));
+
+//Session Configuration
+const session = {
+    secret: process.env.SESSION_SECRET,
+    cookie: {},
+    resave: false,
+    saveUninitialized: false
+  };
+
+  if (app.get("env") === "production") {
+    // Serve secure cookies, requires HTTPS
+    session.cookie.secure = true;
+  }
+
+
+  // Passport Configuration
+const strategy = new Auth0Strategy(
+    {
+    domain: process.env.AUTH0_DOMAIN,
+    clientID: process.env.AUTH0_CLIENT_ID,
+    clientSecret: process.env.AUTH0_CLIENT_SECRET,
+    callbackURL: process.env.AUTH0_CALLBACK_URL
+    },
+    function(accessToken, refreshToken, extraParams, profile, done) {
+        // Access token authorizes user, extraParams.id_token has JSON web token, profile has info from user
+        return done(null, profile);
+    }
+  );
+
+// App Configuration
+
+// app.set("public", path.join(__dirname, "public"));
+// app.set("view engine", "pug");
+// app.use(express.static(path.join(__dirname, "public")));
+
+app.use(expressSession(session));
+
+passport.use(strategy);
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser((user, done) => {
+    done(null, user);
+});
+  
+passport.deserializeUser((user, done) => {
+    done(null, user);
+});
+
+// Creating custom middleware with Express
+app.use((req, res, next) => {
+    // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000')
+    // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    // res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    // res.setHeader('Access-Control-Allow-Credentials', true);
+    res.locals.isAuthenticated = req.isAuthenticated();
+    next();
+  });
+
+//Router mounting
+app.use("/", authRouter);
 
 // Serve static HTML page
 app.use(express.static('./public'));

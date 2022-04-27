@@ -13,6 +13,7 @@
             <button id="add_sleepnav" onclick="showAdd()" class="button-51" role="button">Add Sleep</button>
             <button id="profilenav" onclick="showProfile()" class="button-51" role="button">Profile</button>
             <button id="createprofilenav" onclick="showCreateProfile()" class="button-51" role="button">Create Profile</button>
+            <button id="loginbutton" onclick="LogIn()" class="button-51" role=button>Log In</button>
         </nav>
 
         <script>
@@ -76,6 +77,10 @@
                         w.style.display = "none";
                     }
                 }
+            }
+
+            function LogIn(){
+                fetch('http://localhost:8000/login/', {mode: 'cors'})
             }
 
         </script>
@@ -323,7 +328,7 @@
                     };
 
                 // Establish url to retrieve from
-                const url = "http://localhost:5000/sleep/"
+                const url = "http://localhost:8000/sleep/"
 
                 // Attempt to send data to endpoint via sendData
                 try {
@@ -394,7 +399,7 @@
                         body: logDataJson
                     };
 
-                    const url = "http://localhost:5000/sleep/score/"
+                    const url = "http://localhost:8000/sleep/score/"
                     try {
                         const data = await sendData({url, options})
                         console.log(data)
