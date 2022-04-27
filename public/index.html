@@ -330,6 +330,55 @@
 
         <div id="profile" class="hidden">
             <h1>Profile</h1>
+            <h2>HTML Forms</h2>
+            <p>Hello there!</p>
+            <p><span id="loggedIn"></span></p>
+
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username"><br>
+            <label for="password">Password:</label><br>
+            <input type="text" id="password" name="password"><br><br>
+            <button id="submit" onclick=profileLogIn()>Submit</button>
+
+            <script>
+                function profileLogIn() {
+                    const username = document.getElementById("username").value;
+                    const password = document.getElementById("password").value;
+                    document.getElementById("loggedIn").innerHTML = "Logged in as: " + username;
+                    // *******************************
+                    let logData = {
+                        userName: username,
+                        passWord: password,
+                    }
+
+                    const logDataJson = JSON.stringify(logData)
+                    console.log(logDataJson)
+
+                    const options = {
+                        method: "POST",
+                        headers: {
+                        "Content-Type": "application/json",
+                            Accept: "application/json"
+                        },
+                        body: logDataJson
+                    };
+
+                    const url = "http://localhost:5000/sleep/score/"
+                    try {
+                        const data = await sendData({url, options})
+                        console.log(data)
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
+
+                async function sendData({url, options}) {
+                    const response = await fetch(url, options)
+                    console.log(response)
+                    return response.json()
+                }
+                // *******************************
+            </script>
         </div>
 
     </body>

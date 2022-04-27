@@ -17,21 +17,23 @@ if (row == undefined) {
         password TEXT,
         name TEXT,
         age NUMBER,
+        meal_start_time NUMBER,
+        meal_end_time NUMBER,
         wake_up_time NUMBER,
-        bedtime NUMBER,
+        bedtime NUMBER
     );
     `;
-    user_db.exec(sqlInit);
+    user_db.exec(sqlInit)
 }
 
 // Database for user logs based on their id (id, date, first_meal_time, last_meal_time)
 const log_db = new Database("log.db");
 
-stmt = log_db.prepare(`
+const stmt2 = log_db.prepare(`
     SELECT name FROM sqlite_master WHERE type='table' and name='userlog';
 `);
 
-row = stmt.get();
+row = stmt2.get();
 
 if (row == undefined) {
     const sqlInit = `
@@ -41,7 +43,7 @@ if (row == undefined) {
         first_meal_time NUMBER,
         last_meal_time NUMBER,
         wake_up_time NUMBER,
-        bedtime NUMBER,
+        bedtime NUMBER
     );
     `;
     log_db.exec(sqlInit);

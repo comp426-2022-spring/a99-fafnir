@@ -84,4 +84,5 @@ function sleepScore(age, sleepTime, wakeTime, lastMeal, firstMeal) {
 *   https://www.cdc.gov/sleep/about_sleep/how_much_sleep.html
 */
 
-export { sleepScore };
+//export { sleepScore };
+module.exports = sleepScore;
