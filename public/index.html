@@ -15,6 +15,7 @@
         </nav>
 
         <script>
+            // Call function to make pages visible
             function showHome() {
                 showActual("home")
             }
@@ -27,6 +28,7 @@
                 showActual("profile")
             }
 
+            // Change display on functions to toggle visibility of page based on button-clicks
             function showActual(tab) {
                 var x = document.getElementById("home")
                 var y = document.getElementById("add_sleep")
@@ -64,9 +66,9 @@
             <h1>Home</h1>
         </div>
 
+        <!-- Form html for adding sleep data -->
         <div id="add_sleep" class="hidden">
         <h1>Add Sleep Session</h1>
-        <!-- <form action="/add_sleep.php"> -->
         <form>
         <h2>Enter the start time for session:</h2>
         <input list="start_hours" name="start_hour" id="start_hour">  <!--value should be begin goal time-->
@@ -100,13 +102,13 @@
             <option value="50">
             <option value="55">
         </datalist>
-        <input list="start_am_pms" name="start_am_pm" id="start_am_pm">  <!--value should be begin goal time-->
+        <input list="start_am_pms" name="start_am_pm" id="start_am_pm">  
         <datalist id="start_am_pms">
             <option value="am">
             <option value="pm">
         </datalist>
         <h2>Enter the end time for session:</h2>
-        <input list="end_hours" name="end_hour" id="end_hour">  <!--value should be begin goal time-->
+        <input list="end_hours" name="end_hour" id="end_hour">  
         <datalist id="end_hours">
             <option value="7">
             <option value="8">
@@ -122,7 +124,7 @@
             <option value="6">
         </datalist>
         <nobr>:</nobr>
-        <input list="end_minutes" name="end_minute" id="end_minute">  <!--value should be begin goal time-->
+        <input list="end_minutes" name="end_minute" id="end_minute">  
         <datalist id="end_minutes">
             <option value="00">
             <option value="05">
@@ -137,13 +139,13 @@
             <option value="50">
             <option value="55">
         </datalist>
-        <input list="end_am_pms" name="end_am_pm" id="end_am_pm">  <!--value should be begin goal time-->
+        <input list="end_am_pms" name="end_am_pm" id="end_am_pm">  
         <datalist id="end_am_pms">
             <option value="am">
             <option value="pm">
         </datalist>
         <h2>Enter your last mealtime before this session:</h2>
-        <input list="meal_start_hs" name="meal_start_h" id="meal_start_h">  <!--value should be begin goal time-->
+        <input list="meal_start_hs" name="meal_start_h" id="meal_start_h">  
         <datalist id="meal_start_hs">
             <option value="7">
             <option value="8">
@@ -159,7 +161,7 @@
             <option value="6">
         </datalist>
         <nobr>:</nobr>
-        <input list="meal_start_ms" name="meal_start_m" id="meal_start_m">  <!--value should be begin goal time-->
+        <input list="meal_start_ms" name="meal_start_m" id="meal_start_m">  
         <datalist id="meal_start_ms">
             <option value="00">
             <option value="05">
@@ -174,13 +176,13 @@
             <option value="50">
             <option value="55">
         </datalist>
-        <input list="meal_start_ss" name="meal_start_s" id="meal_start_s">  <!--value should be begin goal time-->
+        <input list="meal_start_ss" name="meal_start_s" id="meal_start_s">  
         <datalist id="meal_start_ss">
             <option value="am">
             <option value="pm">
         </datalist>
         <h2>Enter your first mealtime after this session:</h2>
-        <input list="meal_end_hs" name="meal_end_h" id="meal_end_h">  <!--value should be begin goal time-->
+        <input list="meal_end_hs" name="meal_end_h" id="meal_end_h">  
         <datalist id="meal_end_hs">
             <option value="7">
             <option value="8">
@@ -196,7 +198,7 @@
             <option value="6">
         </datalist>
         <nobr>:</nobr>
-        <input list="meal_end_ms" name="meal_end_m" id="meal_end_m">  <!--value should be begin goal time-->
+        <input list="meal_end_ms" name="meal_end_m" id="meal_end_m"> 
         <datalist id="meal_end_ms">
             <option value="00">
             <option value="05">
@@ -211,7 +213,7 @@
             <option value="50">
             <option value="55">
         </datalist>
-        <input list="meal_end_ss" name="meal_end_s" id="meal_end_s">  <!--value should be begin goal time-->
+        <input list="meal_end_ss" name="meal_end_s" id="meal_end_s"> 
         <datalist id="meal_end_ss">
             <option value="am">
             <option value="pm">
@@ -222,13 +224,14 @@
         
 
         <script>
-            // const db = require('./database.js')
+            // Cumulative value initialization
             var start = 0;
             var end = 0;
             var mstart = 0;
             var mend = 0;
 
             async function store_time(){
+                // Retrieve each value from user
                 var start_hour = document.getElementById("start_hour").value;
                 var start_minute = document.getElementById("start_minute").value;
                 var start_am_pm = document.getElementById("start_am_pm").value;
@@ -242,6 +245,7 @@
                 var meal_end_m = document.getElementById("meal_end_m").value;
                 var meal_end_s = document.getElementById("meal_end_s").value;
 
+                // Manipulate variables to readable and usable form
                 var start_hour = parseInt(start_hour, 10)
                 var start_minute = parseInt(start_minute, 10)
                 var start_time = (start_hour*100) + start_minute;
@@ -270,11 +274,13 @@
                     meal_end_time += 1200;
                 }
 
+                // Set general vars to new ints
                 var start = start_time;
                 var end = end_time;
                 var mstart = meal_start_time;
                 var mend = meal_end_time;
 
+                // Aggregate data into form to stringify
                 let logData = {
                     id: "",
                     date: Date.now(),
@@ -284,9 +290,11 @@
                     bedtime: end,
                 }
 
+                // Change to usable JSON and print
                 const logDataJson = JSON.stringify(logData)
                 console.log(logDataJson)
 
+                // Indicate basic post info and pass stringified data to endpoint
                 const options = {
                       method: "POST",
                       headers: {
@@ -296,7 +304,10 @@
                       body: logDataJson
                     };
 
+                // Establish url to retrieve from
                 const url = "http://localhost:5000/sleep/"
+
+                // Attempt to send data to endpoint via sendData
                 try {
                     const data = await sendData({url, options})
                     console.log(data)
@@ -304,6 +315,7 @@
                     console.log(error)
                 }
 
+                // Reset each field after submitting
                 document.getElementById("start_hour").value = null;
                 document.getElementById("start_minute").value = null;
                 document.getElementById("start_am_pm").value = null;
@@ -319,6 +331,7 @@
 
             }
 
+            // Send data to endpoint and print response before returning JSON
             async function sendData({url, options}) {
                 const response = await fetch(url, options)
                 console.log(response)
@@ -341,7 +354,7 @@
             <button id="submit" onclick=profileLogIn()>Submit</button>
 
             <script>
-                function profileLogIn() {
+                async function profileLogIn() {
                     const username = document.getElementById("username").value;
                     const password = document.getElementById("password").value;
                     document.getElementById("loggedIn").innerHTML = "Logged in as: " + username;
@@ -370,6 +383,10 @@
                     } catch (error) {
                         console.log(error)
                     }
+
+                    document.getElementById("username").value = null;
+                    document.getElementById("password").value - null;
+
                 }
 
                 async function sendData({url, options}) {
