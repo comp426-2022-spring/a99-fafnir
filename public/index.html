@@ -12,6 +12,7 @@
             <button id="homenav" onclick="showHome()" class="button-51" role="button">Home</button>
             <button id="add_sleepnav" onclick="showAdd()" class="button-51" role="button">Add Sleep</button>
             <button id="profilenav" onclick="showProfile()" class="button-51" role="button">Profile</button>
+            <button id="createprofilenav" onclick="showCreateProfile()" class="button-51" role="button">Create Profile</button>
         </nav>
 
         <script>
@@ -28,8 +29,13 @@
                 showActual("profile")
             }
 
+            function showCreateProfile() {
+                showActual("createProfile")
+            }
+
             // Change display on functions to toggle visibility of page based on button-clicks
             function showActual(tab) {
+                var w = document.getElementById("createProfile")
                 var x = document.getElementById("home")
                 var y = document.getElementById("add_sleep")
                 var z = document.getElementById("profile")
@@ -38,6 +44,7 @@
                         x.style.display = "block";
                         y.style.display = "none";
                         z.style.display = "none";
+                        w.style.display = "none";
                     } else {
                         x.style.display = "none";
                     }
@@ -46,6 +53,7 @@
                         y.style.display = "block";
                         x.style.display = "none";
                         z.style.display = "none";
+                        w.style.display = "none";
                     } else {
                         y.style.display = "none";
                     }
@@ -54,8 +62,18 @@
                         z.style.display = "block";
                         y.style.display = "none";
                         x.style.display = "none";
+                        w.style.display = "none";
                     } else {
                         z.style.display = "none";
+                    }
+                } else if (tab === "createProfile") {
+                    if (w.style.display === "none") {
+                        w.style.display = "block";
+                        z.style.display = "none";
+                        y.style.display = "none";
+                        x.style.display = "none";
+                    } else {
+                        w.style.display = "none";
                     }
                 }
             }
@@ -385,7 +403,7 @@
                     }
 
                     document.getElementById("username").value = null;
-                    document.getElementById("password").value - null;
+                    document.getElementById("password").value = null;
 
                 }
 
@@ -397,6 +415,11 @@
                 // *******************************
             </script>
         </div>
+        <div id="createProfile" class="hidden">
+            <h1>Create Profile</h1>
+            <script>
 
+            </script>
+        </div>
     </body>
 </html>

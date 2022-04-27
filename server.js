@@ -29,12 +29,11 @@ app.post('/sleep', function (req, res, next) {
 // app.use('/view', view_profile);
 // app.use('/edit', edit_profile);
 
-    app.post('/sleep/score/', function (req, res) {
-        console.log("hi");
-        const stmt = db.prepare("SELECT age, meal_start_time, meal_end_time, wake_up_time, bedtime FROM userinfo WHERE username LIKE '" + req.body.userName + "' AND password LIKE '" + req.body.passWord + "' AND id = 1").all();
-        const score = sleepScore(stmt.age, stmt.bedtime, stmt.wake_up_time, stmt.meal_start_time, stmt.meal_end_time);
-        res.status(200).json({"score":score});
-    })
+app.post('/sleep/score/', function (req, res) {
+    const stmt = db.prepare("SELECT age, meal_start_time, meal_end_time, wake_up_time, bedtime FROM userinfo WHERE username LIKE '" + req.body.userName + "' AND password LIKE '" + req.body.passWord + "' AND id = 1").all();
+    const score = sleepScore(stmt.age, stmt.bedtime, stmt.wake_up_time, stmt.meal_start_time, stmt.meal_end_time);
+    res.status(200).json({"score":score});
+})
 // app.get('/', (req, res) => {
 //     res.statusCode = 200;
 //     //res.send("Homepage.");
