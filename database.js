@@ -26,31 +26,4 @@ if (row == undefined) {
     user_db.exec(sqlInit)
 }
 
-// Database for user logs based on their id (id, date, first_meal_time, last_meal_time)
-const log_db = new Database("log.db");
-
-const stmt2 = log_db.prepare(`
-    SELECT name FROM sqlite_master WHERE type='table' and name='userlog';
-`);
-
-row = stmt2.get();
-
-if (row == undefined) {
-    const sqlInit = `
-        CREATE TABLE userlog(
-        id INTEGER PRIMARY KEY,
-        date NUMBER,
-        first_meal_time NUMBER,
-        last_meal_time NUMBER,
-        wake_up_time NUMBER,
-        bedtime NUMBER
-    );
-    `;
-    log_db.exec(sqlInit);
-}
-
-module.exports = {user_db, log_db};
-
-
-
-
+module.exports = {user_db};

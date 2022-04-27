@@ -1,4 +1,4 @@
-# Personal Health Information Management App (name pending)
+# Personal Health Information Management App (Clock Eats)
 
 ## Summary 
 
@@ -41,8 +41,8 @@ Some basic roles you will want to consider:
 
 ## Proposed Roles
 Front end / Design leads: Savannah and Autumn
-Back end lead: Joe
-Database lead: Jack
+Back end lead: Jack
+Database lead: Joe
 
 Plan/Documentation Manager: Savannah
 

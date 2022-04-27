@@ -1,11 +1,8 @@
 const sleepScore = require("./sleepscore.js");
 
 var express = require("express")
-// var sleep = require("./add_sleep.js")
-const morgan = require('morgan')
-// const create_profile = require("./create_profile.js")
-// const view_profile = require("./view_profile.js")
-// const edit_profile = require("./edit_profile.js")
+const db = require('./database.js')
+const user_log = require('./user_log.js')
 const port = 5000
 
 const db = require('./database.js').user_db;
@@ -20,7 +17,7 @@ app.use(cors());
 // const path = require('path');
 app.use(express.static('./public'));
 
-app.post('/sleep', function (req, res) {
+app.post('/sleep', function (req, res, next) {
     //res.send('Add sleep page.');
     //res.sendFile(__dirname + './html/add_sleep.html');
     console.log(req.body)
