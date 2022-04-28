@@ -16,8 +16,13 @@ function sleepScore(age, sleepTime, wakeTime, lastMeal, firstMeal) {
     if (age == undefined || sleepTime == undefined || wakeTime == undefined || lastMeal == undefined || firstMeal == undefined) {
         return 50;
     }
+    // age=20
+    // sleepTime=300
+    // wakeTime=700
+    // lastMeal=2300
+    // firstMeal=1000
     // Calculates time asleep (using military time)
-    var asleepTime; 
+    var asleepTime; // 400
     if (sleepTime >= 1200) {
         // Went to bed in the pm hours
         asleepTime = 2400 - sleepTime;
@@ -28,7 +33,7 @@ function sleepScore(age, sleepTime, wakeTime, lastMeal, firstMeal) {
     }
 
     // Calculates time between last meal and sleep
-    var eatToSleep; // 3 hours is ideal (more important the longer, not the shorter) - Leesa
+    var eatToSleep; // 400
     if (sleepTime >= 1200) {
         // Went to bed in the pm hours (assumption made that last meal was also in pm hours)
         eatToSleep = sleepTime - lastMeal;
@@ -45,37 +50,37 @@ function sleepScore(age, sleepTime, wakeTime, lastMeal, firstMeal) {
     }
 
     // Calculate time between waking up and first meal (assumption of first meal eaten the same day that they wake up)
-    var wakeToEat = firstMeal - wakeTime; // Best time within two hours of waking up (ASAP) - Forbes
+    var wakeToEat = firstMeal - wakeTime; // 300
 
     // COMPARE AGE TO ASLEEPTIME
-    var ageAndAsleepTime;
+    var ageAndAsleepTime; // .6
     if (age <= 12) {
         // 9-12 hours
         ageAndAsleepTime = Math.abs(asleepTime / 100 - 10.5);
-        ageAndAsleepTime = (10 - ageAndAsleepTime) / 10;
+        ageAndAsleepTime = (9 - ageAndAsleepTime) / 10;
     } else {
         if (age >= 13 && age <= 18) {
             // 8-10 hours
             ageAndAsleepTime = Math.abs(asleepTime / 100 - 9);
-            ageAndAsleepTime = (10 - ageAndAsleepTime) / 10;
+            ageAndAsleepTime = (9 - ageAndAsleepTime) / 10;
         } else {
             // 7-9 hours
             ageAndAsleepTime = Math.abs(asleepTime / 100 - 8);
-            ageAndAsleepTime = (10 - ageAndAsleepTime) / 10;
+            ageAndAsleepTime = (9 - ageAndAsleepTime) / 10;
         }
     }
 
     // COMPARE eatToSleep with ideal
     var idealEatToSleep = Math.abs(eatToSleep / 100 - 3);
-    idealEatToSleep = (10 - idealEatToSleep) / 10;
+    idealEatToSleep = (10 - idealEatToSleep) / 10; // .9
 
     // COMPARE wakeToEat with ideal
     var idealWakeToEat = Math.abs(wakeToEat / 100);
-    idealWakeToEat = (10 - idealWakeToEat) / 10;
+    idealWakeToEat = (10 - idealWakeToEat) / 10; // .7
 
     // CREATE CALCULATION FOR SLEEP SCORE
     // 50% value for ageAndAsleepTime, 25% each for the other two
-    var yourSleepScore = (2 * ageAndAsleepTime + idealEatToSleep + idealWakeToEat) / 4;
+    var yourSleepScore = ((2 * ageAndAsleepTime + idealEatToSleep + idealWakeToEat) / 4) * 100;
 
     // return yourSleepScore;
     return yourSleepScore; // Place holder. Test to see if this pops up before using actual calculation
