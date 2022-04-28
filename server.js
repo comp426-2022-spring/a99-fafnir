@@ -104,7 +104,7 @@ app.post('/sleep', function (req, res, next) {
     //res.sendFile(__dirname + './html/add_sleep.html');
     console.log(req.body)
     const stmt = db.prepare('INSERT INTO userinfo (id, username, password, name, age, meal_start_time, meal_end_time, wake_up_time, bedtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)')
-    const info = stmt.run(null, req.body.userName, req.body.passWord, req.body.name, req.body.age, req.body.meal_start_time, req.body.meal_end_time, req.body.wake_up_time, req.body.bedtime);
+    const info = stmt.run(null, req.body.userName, req.body.passWord, req.body.name, req.body.age, req.body.first_meal_time, req.body.last_meal_time, req.body.wake_up_time, req.body.bedtime);
     res.status(200).json({"status":"working"})
 })
 
