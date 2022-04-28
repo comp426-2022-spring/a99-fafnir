@@ -88,6 +88,13 @@ app.use((req, res, next) => {
 //Router mounting
 app.use("/", authRouter);
 
+app.post('/nameandage/', function (req, res) {
+    const stmt = db.prepare("SELECT name, age FROM userinfo WHERE username = ?");
+    console.log(stmt.get(req.body.userName));
+    const user = stmt.get(req.body.userName)
+    res.status(200).json({"name":user.name, "age":user.age});
+})
+
 // Serve static HTML page
 app.use(express.static('./public'));
 
@@ -98,6 +105,13 @@ app.post('/sleep', function (req, res, next) {
     console.log(req.body)
     const stmt = db.prepare('INSERT INTO userinfo (id, username, password, name, age, meal_start_time, meal_end_time, wake_up_time, bedtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)')
     const info = stmt.run(null, "username1", "password1", "jakeTest", 20, req.body.meal_start_time, req.body.meal_end_time, req.body.wake_up_time, req.body.bedtime);
+    res.status(200).json({"status":"working"})
+})
+
+app.post('/profile/create/', function (req, res) {
+    const stmt = db.prepare('INSERT INTO userinfo (id, username, password, name, age, meal_start_time, meal_end_time, wake_up_time, bedtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)')
+    //const info = stmt.run(null, "username1", "password1", "jakeTest", 20, req.body.meal_start_time, req.body.meal_end_time, req.body.wake_up_time, req.body.bedtime);
+    const info = stmt.run(null, req.body.userName, req.body.passWord, req.body.name, req.body.age, null, null, null, null);
     res.status(200).json({"status":"working"})
 })
 

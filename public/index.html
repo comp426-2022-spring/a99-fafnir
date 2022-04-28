@@ -13,8 +13,16 @@
             <button id="add_sleepnav" onclick="showAdd()" class="button-51" role="button">Add Sleep</button>
             <button id="profilenav" onclick="showProfile()" class="button-51" role="button">Profile</button>
             <button id="createprofilenav" onclick="showCreateProfile()" class="button-51" role="button">Create Profile</button>
-            <button id="loginbutton" onclick="LogIn()" class="button-51" role=button>Log In</button>
+            <a id="loginbutton" href="/login" class="button-51" role=button>Log In</a>
         </nav>
+
+
+        <div class="hidden">
+            <p><span id="storedUsername">None</span></p>
+            <p><span id="storedPassword">None</span></p>
+            <p><span id="storedName">None</span></p>
+            <p><span id="storedAge">None</span></p>
+        </div>
 
         <script>
             // Call function to make pages visible
@@ -370,17 +378,35 @@
             <p>Hello there!</p>
             <p><span id="loggedIn"></span></p>
 
-            <label for="username">Username:</label><br>
+            <p hidden id="namePart">Name: <span id="nameList"></span></p>
+             <p hidden id="agePart">Age: <span id="ageList"></span></p>
+
+            <label id="userLabel" for="username">Username:</label><br>
             <input type="text" id="username" name="username"><br>
-            <label for="password">Password:</label><br>
+            <label id="passLabel" for="password">Password:</label><br>
             <input type="text" id="password" name="password"><br><br>
-            <button id="submit" onclick=profileLogIn()>Submit</button>
+            <button id="submitOther" onclick=profileLogIn()>Submit</button>
+             <button hidden id="logout" onclick="logOut()">Log out</button>
 
             <script>
                 async function profileLogIn() {
                     const username = document.getElementById("username").value;
                     const password = document.getElementById("password").value;
                     document.getElementById("loggedIn").innerHTML = "Logged in as: " + username;
+                    document.getElementById("storedUsername").innerHTML = username;
+                     document.getElementById("storedPassword").innerHTML = password;
+
+                     // Hiding parts
+                     document.getElementById("username").setAttribute("hidden", "hidden");
+                     document.getElementById("password").setAttribute("hidden", "hidden");
+                     document.getElementById("userLabel").setAttribute("hidden", "hidden");
+                     document.getElementById("passLabel").setAttribute("hidden", "hidden");
+                     document.getElementById("submitOther").setAttribute("hidden", "hidden");
+
+                     // Un-hiding parts
+                     document.getElementById("logout").removeAttribute("hidden");
+                     document.getElementById("namePart").removeAttribute("hidden");
+                     document.getElementById("agePart").removeAttribute("hidden");
                     // *******************************
                     let logData = {
                         userName: username,
@@ -399,10 +425,18 @@
                         body: logDataJson
                     };
 
-                    const url = "http://localhost:8000/sleep/score/"
+                    const url = "http://localhost:8000/nameandage/"
                     try {
                         const data = await sendData({url, options})
                         console.log(data)
+                        if (data != null) {
+                             document.getElementById("storedName").innerHTML = data.name;
+                             document.getElementById("storedAge").innerHTML = data.age;
+                            //  document.getElementById("nameList").innerHTML = document.getElementById("storedName").innerHTML;
+                            //  document.getElementById("ageList").innerHTML = document.getElementById("storedAge").innerHTML;
+                            document.getElementById("nameList").innerHTML = data.name;
+                            document.getElementById("ageList").innerHTML = data.age;
+                         }
                     } catch (error) {
                         console.log(error)
                     }
@@ -411,6 +445,27 @@
                     document.getElementById("password").value = null;
 
                 }
+
+                function logOut() {
+                     document.getElementById("logout").setAttribute("hidden", "hidden");
+                     document.getElementById("storedUsername").innerHTML = "None";
+                     document.getElementById("storedPassword").innerHTML = "None";
+                     document.getElementById("storedName").innerHTML = "None";
+                     document.getElementById("storedAge").innerHTML = "None";
+                     document.getElementById("username").removeAttribute("hidden");
+                     document.getElementById("password").removeAttribute("hidden");
+                     document.getElementById("submitOther").removeAttribute("hidden");
+                     document.getElementById("getScore").setAttribute("hidden", "hidden");
+                     document.getElementById("sleepResult").setAttribute("hidden", "hidden");
+                     document.getElementById("sleepScoreResult").innerHTML = "";
+
+                     document.getElementById("userLabel").removeAttribute("hidden");
+                     document.getElementById("passLabel").removeAttribute("hidden");
+
+                     document.getElementById("namePart").setAttribute("hidden", "hidden");
+                     document.getElementById("agePart").setAttribute("hidden", "hidden");
+                     document.getElementById("loggedIn").innerHTML = "";
+                 }
 
                 async function sendData({url, options}) {
                     const response = await fetch(url, options)
@@ -422,9 +477,74 @@
         </div>
         <div id="createProfile" class="hidden">
             <h1>Create Profile</h1>
-            <script>
+             <p><span id="created"></span></p>
+             <label for="username">Create a Username:</label><br>
+             <input type="text" id="usernameCreation" name="username"><br>
+             <label for="password">Create a Password:</label><br>
+             <input type="text" id="passwordCreation" name="password"><br><br>
+             <label for="nameCreation">Input name:</label><br>
+             <input type="text" id="nameCreation" name="name"><br><br>
+             <label for="ageCreation">Input age (between 0 and 100):</label><br>
+             <input type="text" id="ageCreation" name="age"><br><br>
+             <button id="submitOtherOther" onclick="profileCreate()">Submit</button>
+             <button hidden id="logout" onclick="logOut()">Log out</button>
 
-            </script>
+             <script>
+                 async function profileCreate() {
+                     var username = document.getElementById("usernameCreation").value;
+                     var password = document.getElementById("passwordCreation").value;
+                     var name = document.getElementById("nameCreation").value;
+                     var age = parseInt(document.getElementById("ageCreation").value, 10);
+
+                     document.getElementById("storedUsername").innerHTML = username;
+                     document.getElementById("storedPassword").innerHTML = password;
+                     document.getElementById("storedName").innerHTML = name;
+                     document.getElementById("storedAge").innerHTML = age;
+
+                     let logData = {
+                         userName: username,
+                         passWord: password,
+                         name: name,
+                         age: age,
+                     }
+
+                     // Change to usable JSON and print
+                     const logDataJson = JSON.stringify(logData)
+                     console.log(logDataJson)
+
+                     // Indicate basic post info and pass stringified data to endpoint
+                     const options = {
+                         method: "POST",
+                         headers: {
+                         "Content-Type": "application/json",
+                             Accept: "application/json"
+                         },
+                         body: logDataJson
+                     };
+
+                     // Establish url to retrieve from
+                     const url = "http://localhost:8000/profile/create"
+
+                     // Attempt to send data to endpoint via sendData
+                     try {
+                         const data = await sendData({url, options})
+                         console.log(data)
+                     } catch (error) {
+                         console.log(error)
+                     }
+                     document.getElementById("created").innerHTML = "Profile Created!";
+                     document.getElementById("usernameCreation").value = null;
+                     document.getElementById("passwordCreation").value = null;
+                     document.getElementById("nameCreation").value = null;
+                     document.getElementById("ageCreation").value = null;
+                 }
+
+                 async function sendData({url, options}) {
+                     const response = await fetch(url, options)
+                     console.log(response)
+                     return response.json()
+                 }
+                </script>
         </div>
     </body>
 </html>
