@@ -1,120 +1,77 @@
-// Required external modules
-var express = require("express")
-const path = require("path");
-const expressSession = require("express-session");
-const passport = require("passport");
-const Auth0Strategy = require("passport-auth0");
-const cors = require('cors');
-var bodyParser = require('body-parser')
-require("dotenv").config();
-const { auth } = require('express-openid-connect'); //test
-
-// Require additional files
 const sleepScore = require("./sleepscore.js");
+
+var express = require("express")
+//const db = require('./database.js')
 const user_log = require('./user_log.js')
+const port = 5000
+
 const db = require('./database.js').user_db;
-const authRouter = require("./auth");
-
-// Set port
-const port = 8000
-
-// Initialize app
+const cors = require('cors');
 const app = express()
+var bodyParser = require('body-parser')
 
-// Body-parser Configuration
 app.use(express.json());
 app.use(express.urlencoded());
-//app.use(cors());
-app.use(cors({origin: '*'}));
+app.use(cors());
 
-//Session Configuration
-const session = {
-    secret: process.env.SESSION_SECRET,
-    cookie: {},
-    resave: false,
-    saveUninitialized: false
-  };
-
-  if (app.get("env") === "production") {
-    // Serve secure cookies, requires HTTPS
-    session.cookie.secure = true;
-  }
-
-
-  // Passport Configuration
-const strategy = new Auth0Strategy(
-    {
-    domain: process.env.AUTH0_DOMAIN,
-    clientID: process.env.AUTH0_CLIENT_ID,
-    clientSecret: process.env.AUTH0_CLIENT_SECRET,
-    callbackURL: process.env.AUTH0_CALLBACK_URL
-    },
-    function(accessToken, refreshToken, extraParams, profile, done) {
-        // Access token authorizes user, extraParams.id_token has JSON web token, profile has info from user
-        return done(null, profile);
-    }
-  );
-
-// App Configuration
-
-// app.set("public", path.join(__dirname, "public"));
-// app.set("view engine", "pug");
-// app.use(express.static(path.join(__dirname, "public")));
-
-app.use(expressSession(session));
-
-passport.use(strategy);
-app.use(passport.initialize());
-app.use(passport.session());
-
-passport.serializeUser((user, done) => {
-    done(null, user);
-});
-  
-passport.deserializeUser((user, done) => {
-    done(null, user);
-});
-
-// Creating custom middleware with Express
-app.use((req, res, next) => {
-    // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000')
-    // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    // res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    // res.setHeader('Access-Control-Allow-Credentials', true);
-    res.locals.isAuthenticated = req.isAuthenticated();
-    next();
-  });
-
-//Router mounting
-app.use("/", authRouter);
-
-// Serve static HTML page
+// const path = require('path');
 app.use(express.static('./public'));
 
-// Endpoint which adds add_sleep data into database and returns a JSON status message
-app.post('/sleep', function (req, res, next) {
+// Temporary adding function
+app.post('/sleep/', function (req, res) {
     //res.send('Add sleep page.');
     //res.sendFile(__dirname + './html/add_sleep.html');
-    console.log(req.body)
     const stmt = db.prepare('INSERT INTO userinfo (id, username, password, name, age, meal_start_time, meal_end_time, wake_up_time, bedtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)')
     const info = stmt.run(null, "username1", "password1", "jakeTest", 20, req.body.meal_start_time, req.body.meal_end_time, req.body.wake_up_time, req.body.bedtime);
     res.status(200).json({"status":"working"})
 })
 
-// Endpoint that retrieves user data and returns a sleep score
+// This will change to '/sleep' when properly implemented to update meal and sleep times.
+app.patch('/sleep/add/', function (req, res) {
+    // db.prepare incorrect? is stmt.run necessary?
+    const stmt = db.prepare(`UPDATE userinfo SET meal_start_time = ${req.body.meal_start_time}, meal_end_time = ${req.body.meal_end_time}, wake_up_time = ${req.body.wake_up_time}, bedtime = ${req.body.bedtime} WHERE username LIKE '${req.body.userName}' AND password LIKE '${req.body.passWord}'`);
+    const info = stmt.run();
+    res.status(200);
+})
+
+app.post('/view/', function (req, res) {
+    const stmt = db.prepare("SELECT * FROM userinfo").all();
+    console.log(stmt);
+    res.status(200).json({"status":"working"}); 
+})
+
+app.post('/nameandage/', function (req, res) {
+    const stmt = db.prepare("SELECT name, age FROM userinfo WHERE username LIKE '" + req.body.userName + "' AND password LIKE '" + req.body.passWord + "'").all();
+    console.log(stmt.name);
+    console.log(stmt.age);
+    res.status(200).json({"name":stmt.name, "age":stmt.age});
+})
+
+// app.use('/create', create_profile);
+// app.use('/view', view_profile);
+// app.use('/edit', edit_profile);
+
+app.post('/profile/create/', function (req, res) {
+    const stmt = db.prepare('INSERT INTO userinfo (id, username, password, name, age, meal_start_time, meal_end_time, wake_up_time, bedtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)')
+    const info = stmt.run(null, req.body.userName, req.body.passWord, req.body.name, req.body.age, null, null, null, null);
+    res.status(200).json({"status":"working"})
+})
+
 app.post('/sleep/score/', function (req, res) {
-    const stmt = db.prepare("SELECT age, meal_start_time, meal_end_time, wake_up_time, bedtime FROM userinfo WHERE username LIKE '" + req.body.userName + "' AND password LIKE '" + req.body.passWord + "' AND id = 1").all();
+    const stmt = db.prepare("SELECT age, meal_start_time, meal_end_time, wake_up_time, bedtime FROM userinfo WHERE username LIKE '" + req.body.userName + "' AND password LIKE '" + req.body.passWord + "'").all();
     const score = sleepScore(stmt.age, stmt.bedtime, stmt.wake_up_time, stmt.meal_start_time, stmt.meal_end_time);
     res.status(200).json({"score":score});
 })
+// app.get('/', (req, res) => {
+//     res.statusCode = 200;
+//     //res.send("Homepage.");
+// })
 
-// Endpoint that returns a 404 if endpoint does not exist
 app.use(function(req, res){
     res.statusCode = 404;
     res.status(404).send("404 NOT FOUND")
 });
 
-// Serves app on selected port
 const server = app.listen(port, () => {
-    console.log("App listening on port " + port)
+    console.log("App listening on port 5000")
 })
