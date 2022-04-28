@@ -13,6 +13,9 @@
 
 // ***** ISSUE: 60 mins in an hour, I don't think calculations account for that ******
 function sleepScore(age, sleepTime, wakeTime, lastMeal, firstMeal) {
+    if (age == undefined || sleepTime == undefined || wakeTime == undefined || lastMeal == undefined || firstMeal == undefined) {
+        return 50;
+    }
     // Calculates time asleep (using military time)
     var asleepTime; 
     if (sleepTime >= 1200) {
@@ -75,7 +78,7 @@ function sleepScore(age, sleepTime, wakeTime, lastMeal, firstMeal) {
     var yourSleepScore = (2 * ageAndAsleepTime + idealEatToSleep + idealWakeToEat) / 4;
 
     // return yourSleepScore;
-    return 50; // Place holder. Test to see if this pops up before using actual calculation
+    return yourSleepScore; // Place holder. Test to see if this pops up before using actual calculation
 }
 
 /* Links to information:

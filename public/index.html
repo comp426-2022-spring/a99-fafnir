@@ -255,7 +255,8 @@
         <!-- <input type="submit"> -->
         <input type="button" value="Submit" id="submit" onClick="store_time()">
         </form>
-        
+        <button hidden id="getScore" onClick="getSleepScore()">Get SleepScore</button>
+        <p hidden id="sleepResult">Sleep Score = <span id="sleepScoreResult"></span></p>
 
         <script>
             // Cumulative value initialization
@@ -309,6 +310,10 @@
                 }
 
                 // Set general vars to new ints
+                var username = document.getElementById("storedUsername").innerHTML;
+                var password = document.getElementById("storedPassword").innerHTML;
+                var name = document.getElementById("storedName").innerHTML;
+                var age = document.getElementById("storedAge").innerHTML;
                 var start = start_time;
                 var end = end_time;
                 var mstart = meal_start_time;
@@ -318,6 +323,10 @@
                 let logData = {
                     id: "",
                     date: Date.now(),
+                    userName: username,
+                    passWord: password,
+                    name: name,
+                    age: age,
                     first_meal_time: mstart,
                     last_meal_time: mend,
                     wake_up_time: start,
@@ -362,9 +371,35 @@
                 document.getElementById("meal_end_h").value = null;
                 document.getElementById("meal_end_m").value = null;
                 document.getElementById("meal_end_s").value = null;
-
+                document.getElementById("getScore").removeAttribute("hidden");
             }
 
+            async function getSleepScore() {
+                document.getElementById("sleepResult").removeAttribute("hidden");
+                let logData = {
+                    userName: document.getElementById("storedUsername").innerHTML,
+                    passWord: document.getElementById("storedPassword").innerHTML,
+                }
+                const logDataJson = JSON.stringify(logData)
+                console.log(logDataJson)
+                const options = {
+                    method: "POST",
+                    headers: {
+                    "Content-Type": "application/json",
+                        Accept: "application/json"
+                    },
+                    body: logDataJson
+                };
+
+                const url = "http://localhost:8000/sleep/score/"
+                try {
+                    const data = await sendData({url, options})
+                    console.log(data)
+                    document.getElementById("sleepScoreResult").innerHTML = data.score;
+                } catch (error) {
+                    console.log(error)
+                }
+            }
             // Send data to endpoint and print response before returning JSON
             async function sendData({url, options}) {
                 const response = await fetch(url, options)

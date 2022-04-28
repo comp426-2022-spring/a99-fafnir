@@ -104,21 +104,22 @@ app.post('/sleep', function (req, res, next) {
     //res.sendFile(__dirname + './html/add_sleep.html');
     console.log(req.body)
     const stmt = db.prepare('INSERT INTO userinfo (id, username, password, name, age, meal_start_time, meal_end_time, wake_up_time, bedtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)')
-    const info = stmt.run(null, "username1", "password1", "jakeTest", 20, req.body.meal_start_time, req.body.meal_end_time, req.body.wake_up_time, req.body.bedtime);
+    const info = stmt.run(null, req.body.userName, req.body.passWord, req.body.name, req.body.age, req.body.meal_start_time, req.body.meal_end_time, req.body.wake_up_time, req.body.bedtime);
     res.status(200).json({"status":"working"})
 })
 
 app.post('/profile/create/', function (req, res) {
     const stmt = db.prepare('INSERT INTO userinfo (id, username, password, name, age, meal_start_time, meal_end_time, wake_up_time, bedtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)')
-    //const info = stmt.run(null, "username1", "password1", "jakeTest", 20, req.body.meal_start_time, req.body.meal_end_time, req.body.wake_up_time, req.body.bedtime);
     const info = stmt.run(null, req.body.userName, req.body.passWord, req.body.name, req.body.age, null, null, null, null);
     res.status(200).json({"status":"working"})
 })
 
 // Endpoint that retrieves user data and returns a sleep score
 app.post('/sleep/score/', function (req, res) {
-    const stmt = db.prepare("SELECT age, meal_start_time, meal_end_time, wake_up_time, bedtime FROM userinfo WHERE username LIKE '" + req.body.userName + "' AND password LIKE '" + req.body.passWord + "' AND id = 1").all();
-    const score = sleepScore(stmt.age, stmt.bedtime, stmt.wake_up_time, stmt.meal_start_time, stmt.meal_end_time);
+    const stmt = db.prepare("SELECT age, meal_start_time, meal_end_time, wake_up_time, bedtime FROM userinfo WHERE username = '" + req.body.userName + "' AND password = '" + req.body.passWord + "' ORDER BY id DESC LIMIT 1");
+    const user = stmt.get();
+    console.log(user);
+    const score = sleepScore(user.age, user.bedtime, user.wake_up_time, user.meal_start_time, user.meal_end_time);
     res.status(200).json({"score":score});
 })
 
