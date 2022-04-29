@@ -4,7 +4,7 @@
   "description": "A personal health app for tracking sleeping habits.",
   "main": "server.js",
   "scripts": {
-    "test": "npx nodemon server.js --port=5000 --debug",
+    "test": "npx nodemon server.js --port=8000 --debug",
     "start": "node server.js"
   },
   "repository": {

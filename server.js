@@ -11,6 +11,7 @@ const { auth } = require('express-openid-connect'); //test
 
 // Require additional files
 const sleepScore = require("./sleepscore.js");
+const sleepSum = require("./summary.js");
 const user_log = require('./user_log.js')
 const db = require('./database.js').user_db;
 const authRouter = require("./auth");
@@ -121,6 +122,29 @@ app.post('/sleep/score/', function (req, res) {
     console.log(user);
     const score = sleepScore(user.age, user.bedtime, user.wake_up_time, user.meal_start_time, user.meal_end_time);
     res.status(200).json({"score":score});
+})
+
+app.post('/sleep/summary/', function (req, res) {
+    const stmt = db.prepare("SELECT wake_up_time, bedtime FROM userinfo WHERE username = '" + req.body.userName + "' AND password = '" + req.body.passWord + "' ORDER BY id DESC").all();
+    var json = JSON.parse(JSON.stringify(stmt))
+    var i = 0;
+    console.log(json);
+    var sum = 0;
+    var length = Object.keys(json).length
+
+    while (i < Object.keys(json).length) {
+        const diff = sleepSum(stmt[i].bedtime, stmt[i].wake_up_time);
+        if (diff != null) {
+            sum += diff;
+        } else {
+            length--;
+        }
+        i++;
+    }
+    
+    var avg = sum / length;
+    var avg = avg / 100
+    res.status(200).json({"average":avg});
 })
 
 // Endpoint that returns a 404 if endpoint does not exist

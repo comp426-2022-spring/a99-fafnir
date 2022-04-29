@@ -99,6 +99,45 @@
             <a href="https://youtu.be/9tRohh0gErM?t=1534">Check out Andrew Huberman's take on time restricted eating in his podcast!</a><br><br>
             <button id="getScore" onClick="getSleepScore()">Get SleepScore</button>
             <p hidden id="sleepResult">Sleep Score = <span id="sleepScoreResult"></span></p>
+            
+            <button id="getSummary" onClick="getSummary()">Get Sleep Summary</button>
+            <p hidden id="summaryResult">Average hours of sleep per night = <span id="summaryFuncResult"></span></p>
+        
+            <script>
+                async function getSummary() {
+                    document.getElementById("summaryResult").removeAttribute("hidden");
+                    let logData = {
+                        userName: document.getElementById("storedUsername").innerHTML,
+                        passWord: document.getElementById("storedPassword").innerHTML,
+                    }
+                    const logDataJson = JSON.stringify(logData)
+                    console.log(logDataJson)
+                    const options = {
+                        method: "POST",
+                        headers: {
+                        "Content-Type": "application/json",
+                            Accept: "application/json"
+                        },
+                        body: logDataJson
+                    };
+
+                    const url = "http://localhost:8000/sleep/summary/"
+                    try {
+                        const data = await sendData({url, options})
+                        console.log(data)
+                        document.getElementById("summaryFuncResult").innerHTML = data.average;
+                    } catch (error) {
+                        console.log(error)
+                    }
+            }
+            // Send data to endpoint and print response before returning JSON
+            async function sendData({url, options}) {
+                const response = await fetch(url, options)
+                console.log(response)
+                return response.json()
+            }
+                
+            </script>
         </div>
 
         
