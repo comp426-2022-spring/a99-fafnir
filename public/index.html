@@ -94,7 +94,9 @@
         </script>
 
         <div id="home">
-            <h1>Home</h1>
+            <h1>Home</h1><br>
+            <p>Welcome to Clock Eats! Get started on a healthy sleeping and eating routine.</p><br>
+            <a href="https://youtu.be/9tRohh0gErM?t=1534">Check out Andrew Huberman's take on time restricted eating in his podcast!</a><br><br>
             <button id="getScore" onClick="getSleepScore()">Get SleepScore</button>
             <p hidden id="sleepResult">Sleep Score = <span id="sleepScoreResult"></span></p>
         </div>
@@ -328,8 +330,8 @@
                     age: age,
                     first_meal_time: mstart,
                     last_meal_time: mend,
-                    wake_up_time: start,
-                    bedtime: end,
+                    wake_up_time: end,
+                    bedtime: start,
                 }
 
                 // Change to usable JSON and print
