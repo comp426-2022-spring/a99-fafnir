@@ -6,6 +6,8 @@ Planning and development for an application centered around tracking personal he
 
 ## How to Use
 
+If you have not used our application previously, use "npm install" in the terminal to install the necessary dependencies. 
+
 To begin running the application, type "npm start" or "node server.js" in the terminal.
 
 To begin logging data, first create a profile under the "Create profile" tab. If you are a returning user, you may simply use the "Profile" tab and log in using your username and password. The "Log In" tab for authentication is not currently functional.
