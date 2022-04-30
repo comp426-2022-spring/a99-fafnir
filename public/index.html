@@ -194,7 +194,6 @@
         </div>
 
         
-
         <!-- Form html for adding sleep data -->
         <div id="add_sleep" class="hidden">
         <h1>Add Sleep Session</h1>
@@ -236,6 +235,7 @@
             <option value="am">
             <option value="pm">
         </datalist>
+        
         <h2>Enter the end time for session (i.e. approximate time you woke up):</h2>
         <input list="end_hours" name="end_hour" id="end_hour">  
         <datalist id="end_hours">
@@ -273,6 +273,7 @@
             <option value="am">
             <option value="pm">
         </datalist>
+        
         <h2>Enter your last mealtime before this session (last meal before falling asleep):</h2>
         <input list="meal_start_hs" name="meal_start_h" id="meal_start_h">  
         <datalist id="meal_start_hs">
@@ -310,6 +311,7 @@
             <option value="am">
             <option value="pm">
         </datalist>
+        
         <h2>Enter your first mealtime after this session (first meal after waking up):</h2>
         <input list="meal_end_hs" name="meal_end_h" id="meal_end_h">  
         <datalist id="meal_end_hs">
@@ -465,7 +467,6 @@
                 document.getElementById("meal_end_s").value = null;
                 document.getElementById("getScore").removeAttribute("hidden");
             }
-
         </script>
         </div>
 
