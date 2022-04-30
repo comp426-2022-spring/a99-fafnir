@@ -4,6 +4,9 @@
         <meta charset="UTF-8">
         <title>Add Sleep</title>
         <link rel="stylesheet" href="/add_sleep.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com"> 
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
     </head>
     <body>
 
@@ -100,14 +103,13 @@
             <p>Your sleep score is calculated by taking into account three things: First, your age compared to how long you were asleep. Second, the time between eating your last meal and going to bed (ideally around 3 hours). Third, the time between waking up and your first meal (ideally as soon as possible after waking up).</p><br>
             <iframe width="857" height="482" src="https://www.youtube.com/embed/9tRohh0gErM?start=1534" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             <br><p>Check out Andrew Huberman's take on time restricted eating in his podcast!</p><br><br>
-            <a href="https://youtu.be/9tRohh0gErM?t=1534">Check out Andrew Huberman's take on time restricted eating in his podcast!</a><br><br>
-            <button id="getScore" onClick="getSleepScore()">Get SleepScore</button>
-            <p hidden id="sleepResult">Sleep Score = <span id="sleepScoreResult"></span></p>
+            <button id="getScore" onClick="getSleepScore()" class="button-56" role="button">Get SleepScore</button><br>
+            <p hidden id="sleepResult">Sleep Score = <span id="sleepScoreResult"></span></p><br>
             
-            <button id="getSummary" onClick="getSummary()">Get Sleep Summary</button>
+            <button id="getSummary" onClick="getSummary()" class="button-56" role="button">Get Sleep Summary</button><br>
             <p hidden id="summaryResult">Average hours of sleep per night = <span id="summaryFuncResult"></span></p><br>
             <p hidden id="summaryBeforeResult">Average hours between last meal and bedtime = <span id="summaryFuncBeforeResult"></span></p><br>
-            <p hidden id="summaryAfterResult">Average hours between wake time and first meal = <span id="summaryFuncAfterResult"></span></p>
+            <p hidden id="summaryAfterResult">Average hours between wake time and first meal = <span id="summaryFuncAfterResult"></span></p><br>
         
             <script>
                 async function getSummary() {
@@ -305,7 +307,7 @@
             <option value="pm">
         </datalist>
         <!-- <input type="submit"> -->
-        <input type="button" value="Submit" id="submit" onClick="store_time()">
+        <input type="button" value="Submit" id="submit" onClick="store_time()" class="button-56" role="button">
         </form>
 
         <script>
@@ -473,8 +475,8 @@
             <input type="text" id="username" name="username"><br>
             <label id="passLabel" for="password">Password:</label><br>
             <input type="text" id="password" name="password"><br><br>
-            <button id="submitOther" onclick=profileLogIn()>Submit</button>
-             <button hidden id="logout" onclick="logOut()">Log out</button>
+            <button id="submitOther" onclick=profileLogIn() class="button-56" role="button">Submit</button>
+             <button hidden id="logout" onclick="logOut()" class="button-56" role="button">Log out</button>
 
             <script>
                 async function profileLogIn() {
@@ -574,8 +576,8 @@
              <input type="text" id="nameCreation" name="name"><br><br>
              <label for="ageCreation">Input age (between 0 and 100):</label><br>
              <input type="text" id="ageCreation" name="age"><br><br>
-             <button id="submitOtherOther" onclick="profileCreate()">Submit</button>
-             <button hidden id="logout" onclick="logOut()">Log out</button>
+             <button id="submitOtherOther" onclick="profileCreate()" class="button-56" role="button">Submit</button>
+             <button hidden id="logout" onclick="logOut()" class="button-56" role="button">Log out</button>
 
              <script>
                  async function profileCreate() {
