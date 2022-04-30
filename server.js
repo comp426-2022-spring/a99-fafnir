@@ -27,7 +27,6 @@ const app = express()
 // Body-parser Configuration
 app.use(express.json());
 app.use(express.urlencoded());
-//app.use(cors());
 app.use(cors({origin: '*'}));
 
 //Session Configuration
@@ -60,10 +59,6 @@ const strategy = new Auth0Strategy(
 
 // App Configuration
 
-// app.set("public", path.join(__dirname, "public"));
-// app.set("view engine", "pug");
-// app.use(express.static(path.join(__dirname, "public")));
-
 app.use(expressSession(session));
 
 passport.use(strategy);
@@ -80,10 +75,6 @@ passport.deserializeUser((user, done) => {
 
 // Creating custom middleware with Express
 app.use((req, res, next) => {
-    // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000')
-    // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    // res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    // res.setHeader('Access-Control-Allow-Credentials', true);
     res.locals.isAuthenticated = req.isAuthenticated();
     next();
   });
@@ -91,6 +82,7 @@ app.use((req, res, next) => {
 //Router mounting
 app.use("/", authRouter);
 
+// Endpoint that returns a user's name and age
 app.post('/nameandage/', function (req, res) {
     const stmt = db.prepare("SELECT name, age FROM userinfo WHERE username = ?");
     console.log(stmt.get(req.body.userName));
@@ -103,14 +95,13 @@ app.use(express.static('./public'));
 
 // Endpoint which adds add_sleep data into database and returns a JSON status message
 app.post('/sleep', function (req, res, next) {
-    //res.send('Add sleep page.');
-    //res.sendFile(__dirname + './html/add_sleep.html');
     console.log(req.body)
     const stmt = db.prepare('INSERT INTO userinfo (id, username, password, name, age, meal_start_time, meal_end_time, wake_up_time, bedtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)')
     const info = stmt.run(null, req.body.userName, req.body.passWord, req.body.name, req.body.age, req.body.first_meal_time, req.body.last_meal_time, req.body.wake_up_time, req.body.bedtime);
     res.status(200).json({"status":"working"})
 })
 
+// Endpoint that inserts user info into userinfo table
 app.post('/profile/create/', function (req, res) {
     const stmt = db.prepare('INSERT INTO userinfo (id, username, password, name, age, meal_start_time, meal_end_time, wake_up_time, bedtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)')
     const info = stmt.run(null, req.body.userName, req.body.passWord, req.body.name, req.body.age, null, null, null, null);
@@ -126,6 +117,7 @@ app.post('/sleep/score/', function (req, res) {
     res.status(200).json({"score":score});
 })
 
+// Endpoint that manipulates data retrieved from table based on user's username and returns averages of said data
 app.post('/sleep/summary/', function (req, res) {
     const stmt = db.prepare("SELECT meal_start_time, meal_end_time, wake_up_time, bedtime FROM userinfo WHERE username = '" + req.body.userName + "' AND password = '" + req.body.passWord + "' ORDER BY id DESC").all();
     var json = JSON.parse(JSON.stringify(stmt))
@@ -160,12 +152,15 @@ app.post('/sleep/summary/', function (req, res) {
         i++;
     }
     
+    // Average sleep time
     var avg = sum / length;
     var avg = avg / 100
 
+    // Average hours between last meal and bedtime
     var before_avg = before_sum / before_length
     var before_avg = before_avg / 100
 
+    // Average hours between wake up and first meal time
     var after_avg = after_sum / after_length
     var after_avg = after_avg / 100
 

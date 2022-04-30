@@ -3,7 +3,9 @@
     <head>
         <meta charset="UTF-8">
         <title>Add Sleep</title>
+        <!-- CSS import -->
         <link rel="stylesheet" href="/add_sleep.css">
+        <!-- Font import -->
         <link rel="preconnect" href="https://fonts.googleapis.com"> 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
@@ -11,6 +13,7 @@
     <body>
 
         <br>
+        <!-- Navigation buttons -->
         <nav>
             <button id="homenav" onclick="showHome()" class="button-51" role="button">Home</button>
             <button id="add_sleepnav" onclick="showAdd()" class="button-51" role="button">Add Sleep</button>
@@ -19,7 +22,7 @@
             <a id="loginbutton" href="/login" class="button-51" role=button>Log In</a>
         </nav>
 
-
+        <!-- Stored globals -->
         <div class="hidden">
             <p><span id="storedUsername">None</span></p>
             <p><span id="storedPassword">None</span></p>
@@ -90,6 +93,7 @@
                 }
             }
 
+            // Fetch login endpoint
             function LogIn(){
                 fetch('http://localhost:8000/login/', {mode: 'cors'})
             }
@@ -97,12 +101,15 @@
         </script>
 
         <div id="home">
+            <!-- Explanation of application -->
             <h1>Welcome!</h1>
             <p>Welcome to Clock Eats! Get started on a healthy sleeping and eating routine.</p>
             <p>This application is designed to help you track your average amount of sleep per night and the proximity of your meals to each sleep session. Our application also provides a "sleep score" to let you know how you're doing. </p>
             <p>Your sleep score is calculated by taking into account three things: First, your age compared to how long you were asleep. Second, the time between eating your last meal and going to bed (ideally around 3 hours). Third, the time between waking up and your first meal (ideally as soon as possible after waking up).</p><br>
+            <!-- Video embed -->
             <iframe width="857" height="482" src="https://www.youtube.com/embed/9tRohh0gErM?start=1534" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             <br><p>Check out Andrew Huberman's take on time restricted eating in his podcast!</p><br><br>
+            <!-- Buttons and spans for displaying sleep score and summary -->
             <button id="getScore" onClick="getSleepScore()" class="button-56" role="button">Get SleepScore</button><br>
             <p hidden id="sleepResult">Sleep Score = <span id="sleepScoreResult"></span></p><br>
             
@@ -112,6 +119,7 @@
             <p hidden id="summaryAfterResult">Average hours between wake time and first meal = <span id="summaryFuncAfterResult"></span></p><br>
         
             <script>
+                // Retrieves aggregate user info from endpoint and displays it after button-click
                 async function getSummary() {
                     document.getElementById("summaryResult").removeAttribute("hidden");
                     document.getElementById("summaryBeforeResult").removeAttribute("hidden");
@@ -148,6 +156,39 @@
                 console.log(response)
                 return response.json()
             }
+
+            async function getSleepScore() {
+                document.getElementById("sleepResult").removeAttribute("hidden");
+                let logData = {
+                    userName: document.getElementById("storedUsername").innerHTML,
+                    passWord: document.getElementById("storedPassword").innerHTML,
+                }
+                const logDataJson = JSON.stringify(logData)
+                console.log(logDataJson)
+                const options = {
+                    method: "POST",
+                    headers: {
+                    "Content-Type": "application/json",
+                        Accept: "application/json"
+                    },
+                    body: logDataJson
+                };
+
+                const url = "http://localhost:8000/sleep/score/"
+                try {
+                    const data = await sendData({url, options})
+                    console.log(data)
+                    document.getElementById("sleepScoreResult").innerHTML = data.score;
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+            // Send data to endpoint and print response before returning JSON
+            async function sendData({url, options}) {
+                const response = await fetch(url, options)
+                console.log(response)
+                return response.json()
+            }
                 
             </script>
         </div>
@@ -159,7 +200,7 @@
         <h1>Add Sleep Session</h1>
         <form>
         <h2>Enter the start time for session (i.e. approximate time you fell asleep):</h2>
-        <input list="start_hours" name="start_hour" id="start_hour">  <!--value should be begin goal time-->
+        <input list="start_hours" name="start_hour" id="start_hour">
         <datalist id="start_hours">
             <option value="7">
             <option value="8">
@@ -175,7 +216,7 @@
             <option value="6">
         </datalist>
         <nobr>:</nobr>
-        <input list="start_minutes" name="start_minute" id="start_minute">  <!--value should be begin goal time-->
+        <input list="start_minutes" name="start_minute" id="start_minute">
         <datalist id="start_minutes">
             <option value="00">
             <option value="05">
@@ -272,6 +313,9 @@
         <h2>Enter your first mealtime after this session (first meal after waking up):</h2>
         <input list="meal_end_hs" name="meal_end_h" id="meal_end_h">  
         <datalist id="meal_end_hs">
+            <option value="4">
+            <option value="5">
+            <option value="6">
             <option value="7">
             <option value="8">
             <option value="9">
@@ -281,9 +325,6 @@
             <option value="1">
             <option value="2">
             <option value="3">
-            <option value="4">
-            <option value="5">
-            <option value="6">
         </datalist>
         <nobr>:</nobr>
         <input list="meal_end_ms" name="meal_end_m" id="meal_end_m"> 
@@ -306,7 +347,6 @@
             <option value="am">
             <option value="pm">
         </datalist>
-        <!-- <input type="submit"> -->
         <input type="button" value="Submit" id="submit" onClick="store_time()" class="button-56" role="button">
         </form>
 
@@ -426,39 +466,6 @@
                 document.getElementById("getScore").removeAttribute("hidden");
             }
 
-            async function getSleepScore() {
-                document.getElementById("sleepResult").removeAttribute("hidden");
-                let logData = {
-                    userName: document.getElementById("storedUsername").innerHTML,
-                    passWord: document.getElementById("storedPassword").innerHTML,
-                }
-                const logDataJson = JSON.stringify(logData)
-                console.log(logDataJson)
-                const options = {
-                    method: "POST",
-                    headers: {
-                    "Content-Type": "application/json",
-                        Accept: "application/json"
-                    },
-                    body: logDataJson
-                };
-
-                const url = "http://localhost:8000/sleep/score/"
-                try {
-                    const data = await sendData({url, options})
-                    console.log(data)
-                    document.getElementById("sleepScoreResult").innerHTML = data.score;
-                } catch (error) {
-                    console.log(error)
-                }
-            }
-            // Send data to endpoint and print response before returning JSON
-            async function sendData({url, options}) {
-                const response = await fetch(url, options)
-                console.log(response)
-                return response.json()
-            }
-
         </script>
         </div>
 
@@ -468,9 +475,11 @@
             <p>Hello there!</p>
             <p><span id="loggedIn"></span></p>
 
+            <!-- Display user's name and age -->
             <p hidden id="namePart">Name: <span id="nameList"></span></p>
-             <p hidden id="agePart">Age: <span id="ageList"></span></p>
+            <p hidden id="agePart">Age: <span id="ageList"></span></p>
 
+            <!-- Username and password text boxes -->
             <label id="userLabel" for="username">Username:</label><br>
             <input type="text" id="username" name="username"><br>
             <label id="passLabel" for="password">Password:</label><br>
@@ -479,6 +488,8 @@
              <button hidden id="logout" onclick="logOut()" class="button-56" role="button">Log out</button>
 
             <script>
+                // Retrieves input user and pass from database if it exists and returns age and name
+                // Additionally, stores this info so user can access their data via the homepage
                 async function profileLogIn() {
                     const username = document.getElementById("username").value;
                     const password = document.getElementById("password").value;
@@ -536,6 +547,7 @@
 
                 }
 
+                // Changes stored username, pass, name, and age to null and no longer retrieves user's data on home page
                 function logOut() {
                      document.getElementById("logout").setAttribute("hidden", "hidden");
                      document.getElementById("storedUsername").innerHTML = "None";
@@ -565,7 +577,9 @@
                 // *******************************
             </script>
         </div>
+
         <div id="createProfile" class="hidden">
+            <!-- Input for user to put in their info to be stored and used for calculating sleep score and retrieving data -->
             <h1>Create Profile</h1>
              <p><span id="created"></span></p>
              <label for="username">Create a Username:</label><br>
@@ -580,6 +594,7 @@
              <button hidden id="logout" onclick="logOut()" class="button-56" role="button">Log out</button>
 
              <script>
+                 // Stores user's info in table
                  async function profileCreate() {
                      var username = document.getElementById("usernameCreation").value;
                      var password = document.getElementById("passwordCreation").value;

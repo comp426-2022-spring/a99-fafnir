@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "npx nodemon server.js --port=8000 --debug",
-    "start": "node server.js"
+    "start": "node server.js",
+    "run": "node server.js",
+    "install": "npm i better-sqlite3 body-parser connect-ensure-login cors dotenv express express-openid-connect express-session morgan node-fetch passport passport-auth0 passport-local passport-local-mongoose"
   },
   "repository": {
     "type": "git",
