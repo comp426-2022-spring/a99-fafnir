@@ -50,7 +50,7 @@
 
             // Change display on functions to toggle visibility of page based on button-clicks
             function showActual(tab) {
-                var create = document.getElementById("createProfile")
+                var cre = document.getElementById("createProfile")
                 var hm = document.getElementById("home")
                 var adds = document.getElementById("add_sleep")
                 var prof = document.getElementById("profile")
@@ -59,7 +59,7 @@
                         hm.style.display = "block";
                         adds.style.display = "none";
                         prof.style.display = "none";
-                        create.style.display = "none";
+                        cre.style.display = "none";
                     } else {
                         hm.style.display = "none";
                     }
@@ -68,7 +68,7 @@
                         adds.style.display = "block";
                         hm.style.display = "none";
                         prof.style.display = "none";
-                        create.style.display = "none";
+                        cre.style.display = "none";
                     } else {
                         adds.style.display = "none";
                     }
@@ -77,18 +77,18 @@
                         prof.style.display = "block";
                         adds.style.display = "none";
                         hm.style.display = "none";
-                        create.style.display = "none";
+                        cre.style.display = "none";
                     } else {
                         prof.style.display = "none";
                     }
                 } else if (tab === "createProfile") {
-                    if (create.style.display === "none") {
-                        create.style.display = "block";
+                    if (cre.style.display === "none") {
+                        cre.style.display = "block";
                         prof.style.display = "none";
                         adds.style.display = "none";
                         hm.style.display = "none";
                     } else {
-                        create.style.display = "none";
+                        cre.style.display = "none";
                     }
                 }
             }
