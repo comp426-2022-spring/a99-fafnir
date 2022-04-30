@@ -94,18 +94,24 @@
         </script>
 
         <div id="home">
-            <h1>Home</h1><br>
+            <h1>Welcome!</h1>
             <p>Welcome to Clock Eats! Get started on a healthy sleeping and eating routine.</p><br>
-            <a href="https://youtu.be/9tRohh0gErM?t=1534">Check out Andrew Huberman's take on time restricted eating in his podcast!</a><br><br>
+            <p>This application is designed to help you track your average amount of sleep per night and the proximity of your meals to each sleep session. Our application also provides a "sleep score" to let you know how you're doing. </p><br>
+            <iframe width="857" height="482" src="https://www.youtube.com/embed/9tRohh0gErM?start=1534" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <br><p>Check out Andrew Huberman's take on time restricted eating in his podcast!</p><br><br>
             <button id="getScore" onClick="getSleepScore()">Get SleepScore</button>
             <p hidden id="sleepResult">Sleep Score = <span id="sleepScoreResult"></span></p>
             
             <button id="getSummary" onClick="getSummary()">Get Sleep Summary</button>
-            <p hidden id="summaryResult">Average hours of sleep per night = <span id="summaryFuncResult"></span></p>
+            <p hidden id="summaryResult">Average hours of sleep per night = <span id="summaryFuncResult"></span></p><br>
+            <p hidden id="summaryBeforeResult">Average hours between last meal and bedtime = <span id="summaryFuncBeforeResult"></span></p><br>
+            <p hidden id="summaryAfterResult">Average hours between wake time and first meal = <span id="summaryFuncAfterResult"></span></p>
         
             <script>
                 async function getSummary() {
                     document.getElementById("summaryResult").removeAttribute("hidden");
+                    document.getElementById("summaryBeforeResult").removeAttribute("hidden");
+                    document.getElementById("summaryAfterResult").removeAttribute("hidden");
                     let logData = {
                         userName: document.getElementById("storedUsername").innerHTML,
                         passWord: document.getElementById("storedPassword").innerHTML,
@@ -126,6 +132,8 @@
                         const data = await sendData({url, options})
                         console.log(data)
                         document.getElementById("summaryFuncResult").innerHTML = data.average;
+                        document.getElementById("summaryFuncBeforeResult").innerHTML = data.before;
+                        document.getElementById("summaryFuncAfterResult").innerHTML = data.after;
                     } catch (error) {
                         console.log(error)
                     }
@@ -146,7 +154,7 @@
         <div id="add_sleep" class="hidden">
         <h1>Add Sleep Session</h1>
         <form>
-        <h2>Enter the start time for session:</h2>
+        <h2>Enter the start time for session (i.e. approximate time you fell asleep):</h2>
         <input list="start_hours" name="start_hour" id="start_hour">  <!--value should be begin goal time-->
         <datalist id="start_hours">
             <option value="7">
@@ -183,7 +191,7 @@
             <option value="am">
             <option value="pm">
         </datalist>
-        <h2>Enter the end time for session:</h2>
+        <h2>Enter the end time for session (i.e. approximate time you woke up):</h2>
         <input list="end_hours" name="end_hour" id="end_hour">  
         <datalist id="end_hours">
             <option value="7">
@@ -220,7 +228,7 @@
             <option value="am">
             <option value="pm">
         </datalist>
-        <h2>Enter your last mealtime before this session:</h2>
+        <h2>Enter your last mealtime before this session (last meal before falling asleep):</h2>
         <input list="meal_start_hs" name="meal_start_h" id="meal_start_h">  
         <datalist id="meal_start_hs">
             <option value="7">
@@ -257,7 +265,7 @@
             <option value="am">
             <option value="pm">
         </datalist>
-        <h2>Enter your first mealtime after this session:</h2>
+        <h2>Enter your first mealtime after this session (first meal after waking up):</h2>
         <input list="meal_end_hs" name="meal_end_h" id="meal_end_h">  
         <datalist id="meal_end_hs">
             <option value="7">
