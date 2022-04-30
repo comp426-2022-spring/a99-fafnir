@@ -15,8 +15,14 @@ function sleepSum(sleepTime, wakeTime) {
 
 function sleepBefore(bedtime, mealTime) {
     if (bedtime != null && mealTime != null) {
-        const time = bedtime - mealTime
-        return time
+        var time = 0;
+        if (bedtime >= 1200) {
+            time = 2400 - mealTime;
+            time = time + bedtime;
+        } else {
+            time = bedtime - mealTime;
+        }
+        return time;
     } else {
         return null;
     }
