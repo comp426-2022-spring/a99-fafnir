@@ -48,7 +48,50 @@
                 showActual("createProfile")
             }
 
-            
+            // Change display on functions to toggle visibility of page based on button-clicks
+            function showActual(tab) {
+                var w = document.getElementById("createProfile")
+                var x = document.getElementById("home")
+                var y = document.getElementById("add_sleep")
+                var z = document.getElementById("profile")
+                if (tab === "home") {
+                    if (x.style.display === "none") {
+                        x.style.display = "block";
+                        y.style.display = "none";
+                        z.style.display = "none";
+                        w.style.display = "none";
+                    } else {
+                        x.style.display = "none";
+                    }
+                } else if (tab === "add") {
+                    if (y.style.display === "none") {
+                        y.style.display = "block";
+                        x.style.display = "none";
+                        z.style.display = "none";
+                        w.style.display = "none";
+                    } else {
+                        y.style.display = "none";
+                    }
+                } else if (tab === "profile") {
+                    if (z.style.display === "none") {
+                        z.style.display = "block";
+                        y.style.display = "none";
+                        x.style.display = "none";
+                        w.style.display = "none";
+                    } else {
+                        z.style.display = "none";
+                    }
+                } else if (tab === "createProfile") {
+                    if (w.style.display === "none") {
+                        w.style.display = "block";
+                        z.style.display = "none";
+                        y.style.display = "none";
+                        x.style.display = "none";
+                    } else {
+                        w.style.display = "none";
+                    }
+                }
+            }
 
             // Fetch login endpoint
             function LogIn(){
